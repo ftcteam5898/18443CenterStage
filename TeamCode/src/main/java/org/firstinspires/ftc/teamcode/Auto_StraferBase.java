@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 @Autonomous(name="Auto_StraferBase", group="Starter Code")
 public class Auto_StraferBase extends LinearOpMode{
     // variable declaration & setup
-    DcMotor frontleft, frontright, backleft, backright;
+    DcMotor frontleft, frontright, backleft, backright, arm, wrist, gripper;
 
     // motor counts per rotation (ticks/pulses per rotation)
     // check motor specs from manufacturer
@@ -48,6 +48,7 @@ public class Auto_StraferBase extends LinearOpMode{
         frontright = hardwareMap.dcMotor.get("rf");
         backleft = hardwareMap.dcMotor.get("lb");
         backright = hardwareMap.dcMotor.get("rb");
+        arm = hardwareMap.dcMotor.get("arm");
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -55,6 +56,7 @@ public class Auto_StraferBase extends LinearOpMode{
         waitForStart();
 
         // Call functions here
+
     }
 
 
@@ -105,10 +107,13 @@ public class Auto_StraferBase extends LinearOpMode{
      */
     public void strafeRight(double inches, double speed){ strafeToPosition(inches, speed); }
 
-
-
-
-
+  // At some point we can add a function for the arm. - Zach Johnson
+/**
+Arm
+@param targetpos the
+@param speed has a range of [0.1,0.5]
+ */
+public void arm(double targetpos, double speed){ strafeToPosition(targetpos, speed);}
 
 
     /*
@@ -129,7 +134,6 @@ public class Auto_StraferBase extends LinearOpMode{
         backleft.setPower(speed);
         frontright.setPower(speed);
         backright.setPower(speed);
-
         while (frontleft.isBusy() && frontright.isBusy() && backleft.isBusy() && backright.isBusy()){
             telemetry.addData("Busy...", "");
             telemetry.update();
