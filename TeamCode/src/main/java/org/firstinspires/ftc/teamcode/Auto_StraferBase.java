@@ -7,13 +7,22 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 @Autonomous(name="Auto_StraferBase", group="Starter Code")
 public class Auto_StraferBase extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright, arm, wrist, gripper;
+
+    // Set up webcam, processor, & vision portal
+    AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+    TfodProcessor myTfodProcessor = TfodProcessor.easyCreateWithDefaults();
+    VisionPortal myVisionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), myAprilTagProcessor, myTfodProcessor);
 
     // motor counts per rotation (ticks/pulses per rotation)
     // check motor specs from manufacturer
