@@ -30,17 +30,19 @@ public class StraferTeleOp extends LinearOpMode {
         DcMotor motorArm = hardwareMap.dcMotor.get("arm");
         Servo wrist = hardwareMap.servo.get("wrist");
         Servo gripper = hardwareMap.servo.get("gripper");
+        Servo plane = hardwareMap.servo.get("plane");
         motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         double wristCurrentPos = 0.5;
+        wrist.setPosition(wristCurrentPos);
+        plane.setPosition(0.0);
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
         // motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        wrist.setPosition(wristCurrentPos);
         waitForStart();
 
         if (isStopRequested()) return;
@@ -91,6 +93,13 @@ public class StraferTeleOp extends LinearOpMode {
                 gripper.setPosition(0.0);
             }
             else gripper.setPosition(1.0);
+
+            // plane
+            if (gamepad2.b)
+            {
+                plane.setPosition(1.0);
+            }
+            else plane.setPosition(0.0);
         }
     }
 }
