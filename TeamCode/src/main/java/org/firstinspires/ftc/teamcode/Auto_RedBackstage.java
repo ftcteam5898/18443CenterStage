@@ -14,8 +14,8 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
-@Autonomous(name="Auto_StraferBase", group="Starter Code")
-public class Auto_StraferBase extends LinearOpMode{
+@Autonomous(name="Auto_RedBackstage", group="Starter Code")
+public class Auto_RedBackstage extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright, arm, wrist, gripper;
 
@@ -65,7 +65,9 @@ public class Auto_StraferBase extends LinearOpMode{
         waitForStart();
 
         // Call functions here
-
+        forward(6, 1);
+        turnRight(90, 1);
+        forward(48, 1);
     }
 
 
@@ -117,13 +119,8 @@ public class Auto_StraferBase extends LinearOpMode{
     public void strafeRight(double inches, double speed){ strafeToPosition(inches, speed); }
 
   // At some point we can add a function for the arm. - Zach Johnson
-/**
-Arm
-@param targetpos the
-@param speed has a range of [0.1,0.5]
- */
-public void arm(double targetpos, double speed){ strafeToPosition(targetpos, speed);}
-
+// Arm
+    public void arm(double down, double speed){ strafeToPosition(down, speed);}
 
     /*
     This function's purpose is simply to drive forward or backward.
