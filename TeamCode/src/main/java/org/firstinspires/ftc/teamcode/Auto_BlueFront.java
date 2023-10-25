@@ -20,9 +20,9 @@ public class Auto_BlueFront extends LinearOpMode{
     DcMotor frontleft, frontright, backleft, backright, arm, wrist, gripper;
 
     // Set up webcam, processor, & vision portal
-    AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
-    TfodProcessor myTfodProcessor = TfodProcessor.easyCreateWithDefaults();
-    VisionPortal myVisionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), myAprilTagProcessor, myTfodProcessor);
+    //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+    //TfodProcessor myTfodProcessor = TfodProcessor.easyCreateWithDefaults();
+    //VisionPortal myVisionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), myAprilTagProcessor, myTfodProcessor);
 
     // motor counts per rotation (ticks/pulses per rotation)
     // check motor specs from manufacturer
@@ -57,7 +57,7 @@ public class Auto_BlueFront extends LinearOpMode{
         frontright = hardwareMap.dcMotor.get("rf");
         backleft = hardwareMap.dcMotor.get("lb");
         backright = hardwareMap.dcMotor.get("rb");
-        arm = hardwareMap.dcMotor.get("arm");
+        //arm = hardwareMap.dcMotor.get("arm");
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -120,7 +120,7 @@ public class Auto_BlueFront extends LinearOpMode{
 
   // At some point we can add a function for the arm. - Zach Johnson
 // Arm
-    public void arm(double down, double speed){ strafeToPosition(down, speed);}
+    /*public void arm(double down, double speed){ strafeToPosition(down, speed);}*/
 
     /*
     This function's purpose is simply to drive forward or backward.
@@ -307,8 +307,8 @@ public class Auto_BlueFront extends LinearOpMode{
         // more info on ftc-docs.firstinspires.org
         IMU.Parameters parameters = new IMU.Parameters(
                 new RevHubOrientationOnRobot(
-                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                        RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                        RevHubOrientationOnRobot.UsbFacingDirection.UP
                 )
         );
 
