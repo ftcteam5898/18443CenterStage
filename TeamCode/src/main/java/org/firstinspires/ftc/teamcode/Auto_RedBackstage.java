@@ -66,8 +66,8 @@ public class Auto_RedBackstage extends LinearOpMode{
 
         // Call functions here
         forward(6, 1);
-        turnRight(90, 1);
-        forward(48, 1);
+        turnRight(10, 1);
+        //forward(48, 1);
     }
 
 
@@ -161,7 +161,7 @@ public class Auto_RedBackstage extends LinearOpMode{
 
         //Initialize
 
-        double yaw = robotOrientation.getYaw(AngleUnit.DEGREES); //make this negative?
+        double yaw = -1* robotOrientation.getYaw(AngleUnit.DEGREES); //make this negative?
         telemetry.addData("Speed Direction", speedDirection);
         telemetry.addData("Yaw", yaw);
         telemetry.update();
