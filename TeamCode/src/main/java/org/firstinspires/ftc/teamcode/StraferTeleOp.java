@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -110,9 +111,12 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addLine("---Front---");
             telemetry.addLine("=> Left");
             telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
+            telemetry.addData("Direction", motorFrontLeft.getDirection());
             telemetry.addData("Power", motorFrontLeft.getPower());
             telemetry.addLine("=> Right");
-            telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
+            telemetry.addData("Position", motorFrontRight.getCurrentPosition());
+            telemetry.addData("Direction", motorFrontRight.getDirection());
+            telemetry.addData("Power", motorFrontRight.getPower());
             // Back left and right are separated.
             telemetry.addLine("---Back---");
             telemetry.addLine("=> Left");
@@ -131,13 +135,18 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("---*--PortNum", motorArm.getPortNumber());
             telemetry.addData("----*-Device Name", motorArm.getDeviceName());
             telemetry.addData("Is at ZeroPowerBehavior", motorArm.getZeroPowerBehavior());
-            // Please note, Servos cannot use DCMotor/DCMotorSimple addData commands!
+            // Please note, Servos cannot use DCMotor/DCMotorSimple commands!
             // See Servo.java for list of Servo commands for telemetry
             telemetry.addLine("---Wrist---");
             telemetry.addData("Position", wristCurrentPos);
             telemetry.addData("Direction", wrist.getDirection());
             telemetry.addData("--*---Controller", wrist.getController());
             telemetry.addData("---*--PortNum", wrist.getPortNumber());
+            telemetry.addLine("---Gripper---");
+            telemetry.addData("Position", gripper.getPosition());
+            telemetry.addData("Direction", gripper.getDirection());
+            telemetry.addData("--*---Controller", gripper.getController());
+            telemetry.addData("---*--PortNum", gripper.getPortNumber());
             telemetry.update();
         }
     }
