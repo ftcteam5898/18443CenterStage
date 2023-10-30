@@ -46,7 +46,6 @@ public class StraferTeleOp extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
-
         while (opModeIsActive()) {
 
             double y = -gamepad1.left_stick_y; // Remember, this is reversed!
@@ -100,6 +99,36 @@ public class StraferTeleOp extends LinearOpMode {
                 plane.setPosition(1.0);
             }
             else plane.setPosition(0.0);
+
+
+
+            //Debug to visualize
+            // NOTE: This will help with our next robot. Visual information is very useful!
+            telemetry.addLine("Robot Initialized...");
+            telemetry.addData("Current Runtime", getRuntime());
+            telemetry.addLine("---Front---");
+            telemetry.addLine("=> Left");
+            telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
+            telemetry.addData("Power", motorFrontLeft.getPower());
+            telemetry.addLine("=> Right");
+            telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
+            telemetry.addLine("---Back---");
+            telemetry.addLine("---Arm---");
+            telemetry.addData("Position", motorArm.getCurrentPosition());
+            telemetry.addData("Direction", motorArm.getDirection());
+            telemetry.addData("Power", motorArm.getPower());
+            telemetry.addData("*-----MotorMode", motorArm.getMode());
+            telemetry.addData("-*----MotorType", motorArm.getMotorType());
+            telemetry.addData("--*---Controller", motorArm.getController());
+            telemetry.addData("---*--PortNum", motorArm.getPortNumber());
+            telemetry.addData("----*-Device Name", motorArm.getDeviceName());
+            telemetry.addData("Is at ZeroPowerBehavior", motorArm.getZeroPowerBehavior());
+            telemetry.addLine("---Wrist---");
+            telemetry.addData("Position", wristCurrentPos);
+            telemetry.addData("Direction", wrist.getDirection());
+            telemetry.addData("--*---Controller", wrist.getController());
+            telemetry.addData("---*--PortNum", wrist.getPortNumber());
+            telemetry.update();
         }
     }
 }
