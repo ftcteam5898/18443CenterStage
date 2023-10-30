@@ -102,17 +102,25 @@ public class StraferTeleOp extends LinearOpMode {
 
 
 
-            //Debug to visualize
+            // Visualized Debug (VD) -- Version 1.0.7
             // NOTE: This will help with our next robot. Visual information is very useful!
             telemetry.addLine("Robot Initialized...");
             telemetry.addData("Current Runtime", getRuntime());
+            // Front left and right are separated.
             telemetry.addLine("---Front---");
             telemetry.addLine("=> Left");
             telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
             telemetry.addData("Power", motorFrontLeft.getPower());
             telemetry.addLine("=> Right");
             telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
+            // Back left and right are separated.
             telemetry.addLine("---Back---");
+            telemetry.addLine("=> Left");
+            telemetry.addData("Position", motorBackLeft.getCurrentPosition());
+            telemetry.addData("Power", motorBackLeft.getPower());
+            telemetry.addLine("=> Right");
+            telemetry.addData("Position", motorBackRight.getCurrentPosition());
+            // Arm, Wrist, and Gripper
             telemetry.addLine("---Arm---");
             telemetry.addData("Position", motorArm.getCurrentPosition());
             telemetry.addData("Direction", motorArm.getDirection());
@@ -123,6 +131,8 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("---*--PortNum", motorArm.getPortNumber());
             telemetry.addData("----*-Device Name", motorArm.getDeviceName());
             telemetry.addData("Is at ZeroPowerBehavior", motorArm.getZeroPowerBehavior());
+            // Please note, Servos cannot use DCMotor/DCMotorSimple addData commands!
+            // See Servo.java for list of Servo commands for telemetry
             telemetry.addLine("---Wrist---");
             telemetry.addData("Position", wristCurrentPos);
             telemetry.addData("Direction", wrist.getDirection());
