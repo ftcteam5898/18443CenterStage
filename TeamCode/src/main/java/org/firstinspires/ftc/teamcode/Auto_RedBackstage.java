@@ -122,7 +122,7 @@ public class Auto_RedBackstage extends LinearOpMode{
 // Arm
     /*public void arm(double down, double speed){ strafeToPosition(down, speed);}*/
 
-    /*
+    /**
     This function's purpose is simply to drive forward or backward.
     To drive backward, simply make the inches input negative.
      */
@@ -150,82 +150,90 @@ public class Auto_RedBackstage extends LinearOpMode{
         backleft.setPower(0);
     }
 
-    /*
-    This function uses the Expansion Hub IMU Integrated Gyro to turn a precise number of degrees (+/- 5).
+    /**
+    This function uses the Expansion Hub IMU Integrated Gyro to turn a precise number of degrees (+/- 2).
     Degrees should always be positive, make speedDirection negative to turn left.
      */
     public void turnWithGyro(double degrees, double speedDirection){
-        // Create an object to receive the IMU angles
-        YawPitchRollAngles robotOrientation;
-        robotOrientation = imu.getRobotYawPitchRollAngles();
 
-        //Initialize
-
-        double yaw = -1* robotOrientation.getYaw(AngleUnit.DEGREES); //make this negative?
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+        double yaw = -orientation.getYaw(AngleUnit.DEGREES);//make this negative
         telemetry.addData("Speed Direction", speedDirection);
         telemetry.addData("Yaw", yaw);
         telemetry.update();
+        //
 
         double first;
         double second;
 
-        // turning right
-        if (speedDirection > 0){
-            if (degrees > 10){first = (degrees - 10) + devertify(yaw);}
-            else{first = devertify(yaw);}
-            second = degrees + devertify(yaw);
-        }
+        //
+        if (speedDirection > 0){//set target positions
 
-        // turning left
-        else{
-            if (degrees > 10){first = devertify(-(degrees - 10) + devertify(yaw));}
-            else{first = devertify(yaw);}
-            second = devertify(-degrees + devertify(yaw));
-        }
+            if (degrees > 10){
+                first = (degrees - 10) + devertify(yaw);
+                second = degrees + devertify(yaw);
+            }else{
+                first = devertify(yaw);
+                second = degrees + devertify(yaw);
+            }
 
-        // Go to position
-        double firsta = convertify(first - 5);
-        double firstb = convertify(first + 5);
+        }else{
+
+            if (degrees > 10){
+                first = devertify(-(degrees - 10) + devertify(yaw));
+                second = devertify(-degrees + devertify(yaw));
+            }else{
+                first = devertify(yaw);
+                second = devertify(-degrees + devertify(yaw));
+            }
+            //
+
+        }
+        //
+
+        Double firsta = convertify(first - 2);//178
+        Double firstb = convertify(first + 2);//-178
+        //
         turnWithEncoder(speedDirection);
-
+        //
         if (Math.abs(firsta - firstb) < 11) {
             while (!(firsta < yaw && yaw < firstb) && opModeIsActive()) {//within range?
-                robotOrientation = imu.getRobotYawPitchRollAngles();
-                yaw = robotOrientation.getYaw(AngleUnit.DEGREES); //make this negative?
+                orientation = imu.getRobotYawPitchRollAngles();
+                yaw = -orientation.getYaw(AngleUnit.DEGREES);
                 telemetry.addData("Position", yaw);
                 telemetry.addData("first before", first);
                 telemetry.addData("first after", convertify(first));
                 telemetry.update();
             }
-        }
-        else{
+        }else{
+            //
             while (!((firsta < yaw && yaw < 180) || (-180 < yaw && yaw < firstb)) && opModeIsActive()) {//within range?
-                robotOrientation = imu.getRobotYawPitchRollAngles();
-                yaw = robotOrientation.getYaw(AngleUnit.DEGREES); //make this negative?
+                orientation = imu.getRobotYawPitchRollAngles();
+                yaw = -orientation.getYaw(AngleUnit.DEGREES);
                 telemetry.addData("Position", yaw);
                 telemetry.addData("first before", first);
                 telemetry.addData("first after", convertify(first));
                 telemetry.update();
             }
         }
-
-
-        double seconda = convertify(second - 5);//175
-        double secondb = convertify(second + 5);//-175
+        //
+        Double seconda = convertify(second - 2);//178
+        Double secondb = convertify(second + 2);//-178
+        //
         turnWithEncoder(speedDirection / 3);
-
+        //
         if (Math.abs(seconda - secondb) < 11) {
             while (!(seconda < yaw && yaw < secondb) && opModeIsActive()) {//within range?
-                robotOrientation = imu.getRobotYawPitchRollAngles();
-                yaw = robotOrientation.getYaw(AngleUnit.DEGREES); //make this negative?
+                orientation = imu.getRobotYawPitchRollAngles();
+                yaw = -orientation.getYaw(AngleUnit.DEGREES);
                 telemetry.addData("Position", yaw);
                 telemetry.addData("second before", second);
                 telemetry.addData("second after", convertify(second));
                 telemetry.update();
             }
             while (!((seconda < yaw && yaw < 180) || (-180 < yaw && yaw < secondb)) && opModeIsActive()) {//within range?
-                robotOrientation = imu.getRobotYawPitchRollAngles();
-                yaw = robotOrientation.getYaw(AngleUnit.DEGREES); //make this negative?
+                orientation = imu.getRobotYawPitchRollAngles();
+                yaw = -orientation.getYaw(AngleUnit.DEGREES);
                 telemetry.addData("Position", yaw);
                 telemetry.addData("second before", second);
                 telemetry.addData("second after", convertify(second));
@@ -237,6 +245,7 @@ public class Auto_RedBackstage extends LinearOpMode{
             backright.setPower(0);
         }
 
+        //
         frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -247,7 +256,7 @@ public class Auto_RedBackstage extends LinearOpMode{
         backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    /*
+    /**
     This function uses the encoders to strafe left or right.
     Negative input for inches results in left strafing.
      */
@@ -275,7 +284,7 @@ public class Auto_RedBackstage extends LinearOpMode{
         backleft.setPower(0);
     }
 
-    /*
+    /**
     These functions are used in the turnWithGyro function to ensure inputs
     are interpreted properly.
      */
@@ -298,7 +307,7 @@ public class Auto_RedBackstage extends LinearOpMode{
         return degrees;
     }
 
-    /*
+    /**
     This function is called at the beginning of the program to activate
     the IMU Integrated Gyro.
      */
@@ -316,7 +325,7 @@ public class Auto_RedBackstage extends LinearOpMode{
         imu.initialize(parameters);
     }
 
-    /*
+    /**
     This function is used in the turnWithGyro function to set the
     encoder mode and turn.
      */
