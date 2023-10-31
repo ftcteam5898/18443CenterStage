@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
-@Autonomous(name="Auto_BaseOpMode")
+@Autonomous(name="Auto_BaseOpMode", group = "Starter Code")
 public class Auto_BaseOpMode extends LinearOpMode {
     //
     DcMotor frontLeft, frontRight, backLeft, backRight;

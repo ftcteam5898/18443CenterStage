@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  *
  */
 
-@TeleOp(name="Strafer Tele Op", group="Starter Code")
+@TeleOp(name="Strafer Tele Op", group="Tele")
 public class StraferTeleOp extends LinearOpMode {
 
     @Override

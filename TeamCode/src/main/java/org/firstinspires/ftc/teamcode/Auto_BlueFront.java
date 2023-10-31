@@ -14,7 +14,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
-@Autonomous(name="Auto_BlueFront", group="Starter Code")
+@Autonomous(name="Auto_BlueFront", group="Blue Auto")
 public class Auto_BlueFront extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright, arm, wrist, gripper;
