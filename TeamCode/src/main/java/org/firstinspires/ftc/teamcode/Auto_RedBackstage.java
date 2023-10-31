@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -17,7 +18,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 @Autonomous(name="Auto_RedBackstage", group="Red Auto")
 public class Auto_RedBackstage extends LinearOpMode{
     // variable declaration & setup
-    DcMotor frontleft, frontright, backleft, backright, arm, wrist, gripper;
+    DcMotor frontleft, frontright, backleft, backright, arm;
+    Servo wrist, gripper;
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -61,13 +63,28 @@ public class Auto_RedBackstage extends LinearOpMode{
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        gripper = hardwareMap.servo.get("gripper");
+        closeGripper();
+
         // wait for Start to be pressed
         waitForStart();
 
-        // Call functions here
+        // ************* Call functions here *************************
+
+        // go forward and back up to drop off the purple pixel on the tape line
+        forward(28, 1);
+        back(4, 1);
+
+        // turn right and travel to the board
+        turnRight(90, 1);
+        forward(32, 1);
+
+        // drop off yellow pixel
+        openGripper();
+
+        // strafe right and park
+        strafeRight(20, 1);
         forward(6, 1);
-        turnRight(10, 1);
-        //forward(48, 1);
     }
 
 
@@ -119,8 +136,21 @@ public class Auto_RedBackstage extends LinearOpMode{
     public void strafeRight(double inches, double speed){ strafeToPosition(inches, speed); }
 
   // At some point we can add a function for the arm. - Zach Johnson
-// Arm
-    /*public void arm(double down, double speed){ strafeToPosition(down, speed);}*/
+    /**
+     * Opens the gripper on the arm of the robot
+     */
+    public void openGripper()
+    {
+        gripper.setPosition(0.0);
+    }
+
+    /**
+     * Opens the gripper on the arm of the robot
+     */
+    public void closeGripper()
+    {
+        gripper.setPosition(1.0);
+    }
 
     /**
     This function's purpose is simply to drive forward or backward.
