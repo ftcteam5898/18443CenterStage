@@ -122,7 +122,7 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("Active Servo(s)", "wrist, gripper, plane");
             telemetry.addData("Current Runtime", getRuntime());
             // Front left and right are separated.
-            telemetry.addLine("-------Front-------");
+            telemetry.addLine("-------\u001B[36mFront\u001B[0m-------");
             telemetry.addLine("===> Left");
             telemetry.addData("Busy=", motorFrontLeft.isBusy());
             telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
@@ -134,7 +134,7 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("Direction", motorFrontRight.getDirection());
             telemetry.addData("Power", motorFrontRight.getPower());
             // Back left and right are separated.
-            telemetry.addLine("-------Back-------");
+            telemetry.addLine("-------\u001B[36mBack\u001B[0m-------");
             telemetry.addLine("===> Left");
             telemetry.addData("Busy=", motorBackLeft.isBusy());
             telemetry.addData("Position", motorBackLeft.getCurrentPosition());
@@ -146,7 +146,7 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("Direction", motorBackRight.getDirection());
             telemetry.addData("Power", motorBackRight.getPower());
             // Arm, Wrist, and Gripper
-            telemetry.addLine("-------Arm-------");
+            telemetry.addLine("-------\u001B[36mArm\u001B[0m-------");
             telemetry.addData("Busy=", motorArm.isBusy());
             telemetry.addData("Position", motorArm.getCurrentPosition());
             telemetry.addData("Direction", motorArm.getDirection());
