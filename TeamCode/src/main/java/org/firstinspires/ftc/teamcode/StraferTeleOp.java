@@ -105,8 +105,8 @@ public class StraferTeleOp extends LinearOpMode {
 
 
 
-            // Visualized Debug (VD) -- Version 1.0.7
             // NOTE: This will help with our next robot. Visual information is very useful!
+            telemetry.addLine("Robot Internal Visualizer (RIV) -- Version 2.1.0\n\n");
             telemetry.addData("Robot Status", "✔ Running");
             telemetry.addData("Active Motor(s)", "lf, lb, rf, rb, arm");
             telemetry.addData("Active Servo(s)", "wrist, gripper, plane");
@@ -126,23 +126,26 @@ public class StraferTeleOp extends LinearOpMode {
             // Back left and right are separated.
             telemetry.addLine("-------Back-------");
             telemetry.addLine("===> Left");
+            telemetry.addData("Busy=", motorBackLeft.isBusy());
             telemetry.addData("Position", motorBackLeft.getCurrentPosition());
             telemetry.addData("Direction", motorBackLeft.getDirection());
             telemetry.addData("Power", motorBackLeft.getPower());
             telemetry.addLine("===> Right");
+            telemetry.addData("Busy=", motorBackRight.isBusy());
             telemetry.addData("Position", motorBackRight.getCurrentPosition());
             telemetry.addData("Direction", motorBackRight.getDirection());
             telemetry.addData("Power", motorBackRight.getPower());
             // Arm, Wrist, and Gripper
             telemetry.addLine("-------Arm-------");
+            telemetry.addData("Busy=", motorArm.isBusy());
             telemetry.addData("Position", motorArm.getCurrentPosition());
             telemetry.addData("Direction", motorArm.getDirection());
             telemetry.addData("Power", motorArm.getPower());
-            telemetry.addData("* MotorMode", motorArm.getMode());
-            telemetry.addData("* MotorType", motorArm.getMotorType());
-            telemetry.addData("* Controller", motorArm.getController());
-            telemetry.addData("* PortNum", motorArm.getPortNumber());
-            telemetry.addData("* Device Name", motorArm.getDeviceName());
+            telemetry.addData("* MotorMode", motorArm.getMode() + "\n");
+            telemetry.addData("* MotorType", motorArm.getMotorType() + "\n");
+            telemetry.addData("* Controller", motorArm.getController() + "\n");
+            telemetry.addData("* PortNum", motorArm.getPortNumber() + "\n");
+            telemetry.addData("* Device Name", motorArm.getDeviceName() + "\n");
             telemetry.addData("Is at ZeroPowerBehavior", motorArm.getZeroPowerBehavior());
             // Please note, Servos cannot use DCMotor/DCMotorSimple commands!
             // See Servo.java for list of Servo commands for telemetry

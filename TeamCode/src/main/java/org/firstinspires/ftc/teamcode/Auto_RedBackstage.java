@@ -331,4 +331,6 @@ public class Auto_RedBackstage extends LinearOpMode{
         frontright.setPower(-input);
         backright.setPower(-input);
     }
+
+    
 }

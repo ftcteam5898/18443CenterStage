@@ -331,4 +331,6 @@ public class Auto_BlueBackstage extends LinearOpMode{
         frontright.setPower(-input);
         backright.setPower(-input);
     }
+
+    public void turnToHeading(double maxTurnSpeed, double heading)
 }
