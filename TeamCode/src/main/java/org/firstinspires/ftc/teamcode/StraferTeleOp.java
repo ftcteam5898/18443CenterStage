@@ -51,7 +51,7 @@ public class StraferTeleOp extends LinearOpMode {
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // output a message saying everything is initialized
-        telemetry.addLine("Robot Internal Visualizer (RIV) -- Version 2.1.0\n\n");
+        telemetry.addLine("\u001B[40mRobot Internal Visualizer (RIV) -- Version 2.1.0\u001B[0m\n\n");
         telemetry.addData("Robot Status", "◌ Initialized");
         telemetry.update();
         waitForStart();
@@ -116,8 +116,8 @@ public class StraferTeleOp extends LinearOpMode {
 
 
             // NOTE: This will help with our next robot. Visual information is very useful!
-            telemetry.addLine("Robot Internal Visualizer (RIV) -- Version 2.1.0\n\n");
-            telemetry.addData("Robot Status", "✔ Running");
+            telemetry.addLine("\u001B[40mRobot Internal Visualizer (RIV) -- Version 2.1.0\u001B[0m\n\n");
+            telemetry.addData("Robot Status", "\u001B[32m✔ Running\u001B[0m");
             telemetry.addData("Active Motor(s)", "lf, lb, rf, rb, arm");
             telemetry.addData("Active Servo(s)", "wrist, gripper, plane");
             telemetry.addData("Current Runtime", getRuntime());
