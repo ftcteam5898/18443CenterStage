@@ -221,8 +221,8 @@ public class Auto_RedBackstage extends LinearOpMode{
         }
         //
 
-        Double firsta = convertify(first - 2);//178
-        Double firstb = convertify(first + 2);//-178
+        double firsta = convertify(first - 2);//178
+        double firstb = convertify(first + 2);//-178
         //
         turnWithEncoder(speedDirection);
         //
@@ -247,8 +247,8 @@ public class Auto_RedBackstage extends LinearOpMode{
             }
         }
         //
-        Double seconda = convertify(second - 2);//178
-        Double secondb = convertify(second + 2);//-178
+        double seconda = convertify(second - 2);//178
+        double secondb = convertify(second + 2);//-178
         //
         turnWithEncoder(speedDirection / 3);
         //
