@@ -17,8 +17,10 @@ import com.qualcomm.robotcore.hardware.Servo;
  *
  */
 
-@TeleOp(name="Strafer Tele Op", group="Starter Code")
+@TeleOp(name="Strafer Tele Op", group="Tele")
 public class StraferTeleOp extends LinearOpMode {
+    private double wristUpPos = 1.0;
+    private double wristDownPos = 0.0;
 
     @Override
     public void runOpMode() {
@@ -29,21 +31,28 @@ public class StraferTeleOp extends LinearOpMode {
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("rf");
         DcMotor motorBackRight = hardwareMap.dcMotor.get("rb");
         DcMotor motorArm = hardwareMap.dcMotor.get("arm");
+
+        //Declare servos
         Servo wrist = hardwareMap.servo.get("wrist");
         Servo gripper = hardwareMap.servo.get("gripper");
         Servo plane = hardwareMap.servo.get("plane");
+
+        // set mode for arm motor & set braking
         motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        // set the starting positions of the servos
         double wristCurrentPos = 0.5;
         wrist.setPosition(wristCurrentPos);
         plane.setPosition(0.0);
-        // Reverse the right side motors
-        // Reverse left motors if you are using NeveRests
-        // motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        //motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        // Reverse one side of the motors
+        // If it goes in reverse, reverse the other side.
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        // output a message saying everything is initialized
         telemetry.addData("Robot Status", "Initialized");
         telemetry.update();
         waitForStart();
@@ -54,6 +63,7 @@ public class StraferTeleOp extends LinearOpMode {
             double y = -gamepad1.left_stick_y; // Remember, this is reversed!
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
+
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio, but only when
             // at least one is out of the range [-1, 1]
@@ -62,8 +72,7 @@ public class StraferTeleOp extends LinearOpMode {
             double backLeftPower = (y - x + rx) / denominator;
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
-            double wristUpPos = 1.0;
-            double wristDownPos = 0.0;
+
             motorFrontLeft.setPower(frontLeftPower);
             motorBackLeft.setPower(backLeftPower);
             motorFrontRight.setPower(frontRightPower);
