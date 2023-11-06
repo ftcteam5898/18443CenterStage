@@ -73,18 +73,18 @@ public class Auto_RedBackstage extends LinearOpMode{
 
         // go forward and back up to drop off the purple pixel on the tape line
         forward(28, 1);
-        back(4, 1);
+        back(8, 0.5);
 
         // turn right and travel to the board
-        turnRight(90, 1);
+        turnRight(90, 0.5);
         forward(32, 1);
 
         // drop off yellow pixel
         openGripper();
 
         // strafe right and park
-        strafeRight(20, 1);
-        forward(6, 1);
+        strafeRight(20, .5);
+        forward(12, 1);
     }
 
 

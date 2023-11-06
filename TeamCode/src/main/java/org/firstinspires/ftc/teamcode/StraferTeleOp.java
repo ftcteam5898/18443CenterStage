@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -21,7 +22,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp(name="Strafer Tele Op", group="Tele")
 public class StraferTeleOp extends LinearOpMode {
-
+    private ElapsedTime runtime = new ElapsedTime();
     @Override
     public void runOpMode() {
         // Declare our motors
@@ -53,11 +54,11 @@ public class StraferTeleOp extends LinearOpMode {
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // output a message saying everything is initialized
-        telemetry.addLine("\u001B[40mRobot Internal Visualizer (RIV) -- Version 2.1.0\u001B[0m\n\n");
+        telemetry.addLine("Robot Internal Visualizer (RIV) -- Version 2.1.0\n\n");
         telemetry.addData("Robot Status", "◌ Initialized");
         telemetry.update();
         waitForStart();
-
+        runtime.reset();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
 
@@ -89,15 +90,15 @@ public class StraferTeleOp extends LinearOpMode {
             else motorArm.setPower(0);  // Arm remains in its static position.
 
             double wristUpPos = 1.0;
-            double wristDownPos = 0.0;
+            double wristDownPos = 0.02;
             if (gamepad2.y && wristCurrentPos <= wristUpPos)
             {
-                wristCurrentPos += 0.001;
+                wristCurrentPos += 0.005;
                 wrist.setPosition(wristCurrentPos);
              }
             else if (gamepad2.a && wristCurrentPos >= wristDownPos)
             {
-                wristCurrentPos -= 0.001;
+                wristCurrentPos -= 0.005;
                 wrist.setPosition(wristCurrentPos);
             }
 
@@ -109,70 +110,70 @@ public class StraferTeleOp extends LinearOpMode {
             else gripper.setPosition(1.0);
 
             // plane
-            if (gamepad2.b)
+            if (runtime.seconds()>=90 && gamepad2.b)
             {
                 plane.setPosition(1.0);
             }
             else plane.setPosition(0.0);
 
 
-            
+
             // NOTE: This will help with our next robot. Visual information is very useful!
-            telemetry.addLine("\u001B[40mRobot Internal Visualizer (RIV) -- Version 2.1.0\u001B[0m\n\n");
-            telemetry.addData("Robot Status", "\u001B[32m✔ Running\u001B[0m");
+            telemetry.addLine("Robot Internal Visualizer (RIV) -- Version 2.1.0\n\n");
+            telemetry.addData("Robot Status", "✔ Running");
             telemetry.addData("➤ Active Motor(s)", "lf, lb, rf, rb, arm");
             telemetry.addData("➤ Active Servo(s)", "wrist, gripper, plane");
-            telemetry.addData("⏱ Current Runtime", getRuntime());
+            telemetry.addData("➤ Current Runtime", getRuntime());
             // Front left and right are separated.
-            telemetry.addLine("-------\u001B[36mFront\u001B[0m-------");
+            telemetry.addLine("--------------Front--------------");
             telemetry.addLine("===> Left");
             telemetry.addData("Busy=", motorFrontLeft.isBusy());
             telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
-            telemetry.addData("↻ Direction", motorFrontLeft.getDirection());
-            telemetry.addData("⚡ Power", motorFrontLeft.getPower());
+            telemetry.addData("Direction", motorFrontLeft.getDirection());
+            telemetry.addData("Power", motorFrontLeft.getPower());
             telemetry.addLine("===> Right");
             telemetry.addData("Busy=", motorFrontRight.isBusy());
             telemetry.addData("Position", motorFrontRight.getCurrentPosition());
-            telemetry.addData("↻ Direction", motorFrontRight.getDirection());
-            telemetry.addData("⚡ Power", motorFrontRight.getPower());
+            telemetry.addData("Direction", motorFrontRight.getDirection());
+            telemetry.addData("Power", motorFrontRight.getPower());
             // Back left and right are separated.
-            telemetry.addLine("-------\u001B[36mBack\u001B[0m-------");
+            telemetry.addLine("--------------Back--------------");
             telemetry.addLine("===> Left");
             telemetry.addData("Busy=", motorBackLeft.isBusy());
             telemetry.addData("Position", motorBackLeft.getCurrentPosition());
-            telemetry.addData("↻ Direction", motorBackLeft.getDirection());
-            telemetry.addData("⚡ Power", motorBackLeft.getPower());
+            telemetry.addData("Direction", motorBackLeft.getDirection());
+            telemetry.addData("Power", motorBackLeft.getPower());
             telemetry.addLine("===> Right");
             telemetry.addData("Busy=", motorBackRight.isBusy());
             telemetry.addData("Position", motorBackRight.getCurrentPosition());
-            telemetry.addData("↻ Direction", motorBackRight.getDirection());
-            telemetry.addData("⚡ Power", motorBackRight.getPower());
+            telemetry.addData("Direction", motorBackRight.getDirection());
+            telemetry.addData("Power", motorBackRight.getPower());
             // Arm, Wrist, and Gripper
-            telemetry.addLine("-------\u001B[36mArm\u001B[0m-------");
+            telemetry.addLine("--------------Arm--------------");
             telemetry.addData("Busy=", motorArm.isBusy());
             telemetry.addData("Position", motorArm.getCurrentPosition());
-            telemetry.addData("↻ Direction", motorArm.getDirection());
-            telemetry.addData("⚡ Power", motorArm.getPower());
-            telemetry.addData("〰▶ MotorMode", motorArm.getMode() + "\n");
-            telemetry.addData("〰▶ MotorType", motorArm.getMotorType() + "\n");
-            telemetry.addData("〰▶ Controller", motorArm.getController() + "\n");
-            telemetry.addData("〰▶ PortNum", motorArm.getPortNumber() + "\n");
-            telemetry.addData("〰▶ Device Name", motorArm.getDeviceName() + "\n");
+            telemetry.addData("Direction", motorArm.getDirection());
+            telemetry.addData("Power", motorArm.getPower());
+            telemetry.addData("▶ MotorMode", motorArm.getMode() + "\n");
+            telemetry.addData("▶ MotorType", motorArm.getMotorType() + "\n");
+            telemetry.addData("▶ Controller", motorArm.getController() + "\n");
+            telemetry.addData("▶ PortNum", motorArm.getPortNumber() + "\n");
+            telemetry.addData("▶ Device Name", motorArm.getDeviceName() + "\n");
             telemetry.addData("Is at ZeroPowerBehavior", motorArm.getZeroPowerBehavior());
             // Please note, Servos cannot use DCMotor/DCMotorSimple commands!
             // See Servo.java for list of Servo commands for telemetry
-            telemetry.addLine("-------\u001B[36mWrist\u001B[0m-------");
-            telemetry.addData("Position", wristCurrentPos);
+            telemetry.addLine("--------------Wrist--------------");
+            telemetry.addData("Position", wrist.getPosition());
             telemetry.addData("Direction", wrist.getDirection());
-            telemetry.addData("〰▶ Controller", wrist.getController());
-            telemetry.addData("〰▶ PortNum", wrist.getPortNumber());
-            telemetry.addData("〰▶ Device Name", wrist.getDeviceName());
-            telemetry.addLine("-------\u001B[36mGripper\u001B[0m-------");
+            telemetry.addData("▶ Controller", wrist.getController() + "\n");
+            telemetry.addData("▶ PortNum", wrist.getPortNumber() + "\n");
+            telemetry.addData("▶ Device Name", wrist.getDeviceName() + "\n");
+            telemetry.addLine("--------------Gripper--------------");
             telemetry.addData("Position", gripper.getPosition());
             telemetry.addData("Direction", gripper.getDirection());
-            telemetry.addData("〰▶ Controller", gripper.getController());
-            telemetry.addData("〰▶ PortNum", gripper.getPortNumber());
-            telemetry.addData("〰▶ Device Name", gripper.getDeviceName());
+            telemetry.addData("▶ Controller", gripper.getController() + "\n");
+            telemetry.addData("▶ PortNum", gripper.getPortNumber() + "\n");
+            telemetry.addData("▶ Device Name", gripper.getDeviceName() + "\n");
             telemetry.update();
         }
     }
