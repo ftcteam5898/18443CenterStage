@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -17,7 +18,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 @Autonomous(name="Auto_BlueBackstage", group="Blue Auto")
 public class Auto_BlueBackstage extends LinearOpMode{
     // variable declaration & setup
-    DcMotor frontleft, frontright, backleft, backright, arm, wrist, gripper;
+    DcMotor frontleft, frontright, backleft, backright, arm;
+    Servo wrist, gripper;
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -41,7 +43,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
 
     // use calibrate auto to check this number before proceeding
     double bias = 0.94; // adjust based on calibration opMode
-    
+
     double strafeBias = 0.9;//change to adjust only strafing movement
     //
     double conversion = cpi * bias;
@@ -61,13 +63,28 @@ public class Auto_BlueBackstage extends LinearOpMode{
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        gripper = hardwareMap.servo.get("gripper");
+        closeGripper();
+
         // wait for Start to be pressed
         waitForStart();
 
-        // Call functions here
-        forward(6, 1);
-        turnLeft(90, 1);
-        forward(48, 1);
+        // ************* Call functions here *************************
+
+        // go forward and back up to drop off the purple pixel on the tape line
+        forward(28, 1);
+        back(8, 0.5);
+
+        // turn right and travel to the board
+        turnLeft(90, 0.5);
+        forward(32, 1);
+
+        // drop off yellow pixel
+        openGripper();
+
+        // strafe right and park
+        strafeLeft(20, .5);
+        forward(12, 1);
     }
 
 
@@ -91,40 +108,53 @@ public class Auto_BlueBackstage extends LinearOpMode{
     public void back(double inches, double speed){ moveToPosition(-inches, speed); }
 
     /**
-    Rotate the robot left
-    @param degrees the amount of degrees to rotate
-    @param speed has a range of [0,1]
+     Rotate the robot left
+     @param degrees the amount of degrees to rotate
+     @param speed has a range of [0,1]
      */
     public void turnLeft(double degrees, double speed){ turnWithGyro(degrees, -speed); }
 
     /**
-    Rotate the robot right
-    @param degrees the amount of degrees to rotate
-    @param speed has a range of [0,1]
+     Rotate the robot right
+     @param degrees the amount of degrees to rotate
+     @param speed has a range of [0,1]
      */
     public void turnRight(double degrees, double speed){ turnWithGyro(degrees, speed); }
 
     /**
-    Strafe left
-    @param inches the distance in inches to strafe
-    @param speed has a range of [0,1]
+     Strafe left
+     @param inches the distance in inches to strafe
+     @param speed has a range of [0,1]
      */
     public void strafeLeft(double inches, double speed){ strafeToPosition(-inches, speed); }
 
     /**
-    Strafe right
-    @param inches the distance in inches to strafe
-    @param speed has a range of [0,1]
+     Strafe right
+     @param inches the distance in inches to strafe
+     @param speed has a range of [0,1]
      */
     public void strafeRight(double inches, double speed){ strafeToPosition(inches, speed); }
 
-  // At some point we can add a function for the arm. - Zach Johnson
-// Arm
-    /*public void arm(double down, double speed){ strafeToPosition(down, speed);}*/
+    // At some point we can add a function for the arm. - Zach Johnson
+    /**
+     * Opens the gripper on the arm of the robot
+     */
+    public void openGripper()
+    {
+        gripper.setPosition(0.0);
+    }
 
-    /*
-    This function's purpose is simply to drive forward or backward.
-    To drive backward, simply make the inches input negative.
+    /**
+     * Opens the gripper on the arm of the robot
+     */
+    public void closeGripper()
+    {
+        gripper.setPosition(1.0);
+    }
+
+    /**
+     This function's purpose is simply to drive forward or backward.
+     To drive backward, simply make the inches input negative.
      */
     public void moveToPosition(double inches, double speed){
         int move = (int)(Math.round(inches*conversion));
@@ -155,6 +185,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
      Degrees should always be positive, make speedDirection negative to turn left.
      */
     public void turnWithGyro(double degrees, double speedDirection){
+
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         double yaw = -orientation.getYaw(AngleUnit.DEGREES);//make this negative
         telemetry.addData("Speed Direction", speedDirection);
@@ -340,6 +371,6 @@ public class Auto_BlueBackstage extends LinearOpMode{
         backright.setPower(-input);
     }
 
-    public void turnToHeading(double maxTurnSpeed, double heading) {
+
 }
-    }
+
