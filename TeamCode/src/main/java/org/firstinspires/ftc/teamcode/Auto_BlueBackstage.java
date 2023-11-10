@@ -64,6 +64,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         gripper = hardwareMap.servo.get("gripper");
+        wrist = hardwareMap.servo.get("wrist");
         closeGripper();
 
         // wait for Start to be pressed
@@ -74,16 +75,25 @@ public class Auto_BlueBackstage extends LinearOpMode{
         // go forward and back up to drop off the purple pixel on the tape line
         forward(28, 1);
         back(8, 0.5);
+        sleep(150);
 
         // turn right and travel to the board
-        turnLeft(90, 0.5);
-        forward(32, 1);
+        turnLeft(85, 0.25);
+        sleep(150);
+        forward(30, 1);
+
 
         // drop off yellow pixel
+        wrist.setPosition(0.5);
+        sleep(150);
         openGripper();
+        sleep(1000);
+        back(9, .25);
+        wrist.setPosition(0.02);
+        sleep(1000);
 
         // strafe right and park
-        strafeLeft(20, .5);
+        strafeRight(30, .5);
         forward(12, 1);
     }
 

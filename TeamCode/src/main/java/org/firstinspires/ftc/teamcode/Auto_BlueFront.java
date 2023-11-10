@@ -72,16 +72,13 @@ public class Auto_BlueFront extends LinearOpMode{
         // ************* Call functions here *************************
 
         // go forward and back up to drop off the purple pixel on the tape line
-        forward(28, 1);
+        forward(28, .7);
         back(26, 0.5);
 
-        // turn right and travel to the board
-        turnLeft(85, 0.5);
-        forward(24, 0.1);
-        turnRight(10, 0.5);
-        forward(24, 0.1);
-        turnLeft(10, 0.5);
-        forward(48, 1);
+        // turn left and travel to the board
+        turnLeft(88, 0.5);
+        forward(48, 0.25);
+        forward(30, 1);
     }
 
 
