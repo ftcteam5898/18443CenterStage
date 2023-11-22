@@ -44,9 +44,7 @@ public class StraferTeleOp extends LinearOpMode {
         motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // set the starting positions of the servos
-        double wristCurrentPos = 0.5;
-        wrist.setPosition(wristCurrentPos);
-        plane.setPosition(0.0);
+
 
         // Reverse one side of the motors
         // If it goes in reverse, reverse the other side.
@@ -61,8 +59,9 @@ public class StraferTeleOp extends LinearOpMode {
         runtime.reset();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
-
-            double y = -gamepad1.left_stick_y; // Remember, this is reversed!
+            double wristCurrentPos = 0.5;
+            wrist.setPosition(wristCurrentPos);
+            plane.setPosition(0.0);  double y = -gamepad1.left_stick_y; // Remember, this is reversed!
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
