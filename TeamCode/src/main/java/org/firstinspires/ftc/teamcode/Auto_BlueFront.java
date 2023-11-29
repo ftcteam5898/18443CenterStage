@@ -69,7 +69,7 @@ public class Auto_BlueFront extends LinearOpMode{
         // wait for Start to be pressed
         waitForStart();
 
-        // ************* Call functions here *************************
+        // Call functions here
 
         // go forward and back up to drop off the purple pixel on the tape line
         forward(28, .7);
