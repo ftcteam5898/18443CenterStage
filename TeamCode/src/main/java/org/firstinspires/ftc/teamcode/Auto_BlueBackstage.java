@@ -20,6 +20,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright, arm;
     Servo wrist, gripper;
+
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
     //TfodProcessor myTfodProcessor = TfodProcessor.easyCreateWithDefaults();
@@ -42,7 +43,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
 
     // use calibrate auto to check this number before proceeding
     double bias = 0.94; // adjust based on calibration opMode
-    
+
     double strafeBias = 0.9;//change to adjust only strafing movement
     //
     double conversion = cpi * bias;
@@ -58,21 +59,25 @@ public class Auto_BlueBackstage extends LinearOpMode{
         frontright = hardwareMap.dcMotor.get("rf");
         backleft = hardwareMap.dcMotor.get("lb");
         backright = hardwareMap.dcMotor.get("rb");
-        //arm = hardwareMap.dcMotor.get("arm");
+        arm = hardwareMap.dcMotor.get("arm");
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         gripper = hardwareMap.servo.get("gripper");
+
+        wrist = hardwareMap.servo.get("wrist");
+
         closeGripper();
 
         // wait for Start to be pressed
         waitForStart();
 
-        // ************* Call functions here *************************
+        // Call functions here
 
         // go forward and back up to drop off the purple pixel on the tape line
         forward(28, 1);
         back(8, 0.5);
+
 
         // turn right and travel to the board
         turnLeft(90, 0.5);
@@ -82,6 +87,26 @@ public class Auto_BlueBackstage extends LinearOpMode{
         openGripper();
         // strafe right and park
         strafeLeft(20, .5);
+
+        sleep(150);
+
+        // turn right and travel to the board
+        turnLeft(85, 0.25);
+        sleep(150);
+        forward(30, 1);
+
+
+        // drop off yellow pixel
+        wrist.setPosition(0.5);
+        sleep(150);
+        openGripper();
+        sleep(1000);
+        back(9, .25);
+        wrist.setPosition(0.02);
+        sleep(1000);
+
+        // strafe right and park
+        strafeRight(30, .5);
         forward(12, 1);
     }
 
@@ -388,3 +413,4 @@ public class Auto_BlueBackstage extends LinearOpMode{
 
 
 }
+
