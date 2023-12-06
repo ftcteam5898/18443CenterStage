@@ -31,18 +31,29 @@ public class StraferTeleOp extends LinearOpMode {
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("lb");
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("rf");
         DcMotor motorBackRight = hardwareMap.dcMotor.get("rb");
-        DcMotor motorArm = hardwareMap.dcMotor.get("arm");
+        //DcMotor motorArm = hardwareMap.dcMotor.get("arm");
+        DcMotor leftslide = hardwareMap.dcMotor.get("lslide");
+        DcMotor rightslide = hardwareMap.dcMotor.get("rslide");
+
+        DcMotor leftIntake = hardwareMap.dcMotor.get("lintake");
+        DcMotor rightIntake = hardwareMap.dcMotor.get("rintake");
 
         //Declare servos
+        /*
         Servo wrist = hardwareMap.servo.get("wrist");
         Servo gripper = hardwareMap.servo.get("gripper");
+         */
         Servo plane = hardwareMap.servo.get("plane");
-
+        Servo leftBumper = hardwareMap.servo.get("lbumper");
+        Servo rightBumper = hardwareMap.servo.get("rbumper");
+        Servo Dumper = hardwareMap.servo.get("dumper");
         // set mode for arm motor & set braking
-        motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        /*
+         motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+         motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+         motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+         *\
+         */
         // set the starting positions of the servos
 
 
@@ -60,8 +71,9 @@ public class StraferTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
         while (opModeIsActive()) {
             double wristCurrentPos = 0.5;
-            wrist.setPosition(wristCurrentPos);
-            plane.setPosition(0.0);  double y = -gamepad1.left_stick_y; // Remember, this is reversed!
+           // wrist.setPosition(wristCurrentPos);
+            plane.setPosition(0.0);
+            double y = -gamepad1.left_stick_y; // Remember, this is reversed!
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
@@ -78,16 +90,55 @@ public class StraferTeleOp extends LinearOpMode {
             motorBackLeft.setPower(backLeftPower);
             motorFrontRight.setPower(frontRightPower);
             motorBackRight.setPower(backRightPower);
+        // SLIDERS
+            if (gamepad1.left_bumper) {
+                leftslide.setPower(1);
+            }
+            else if (gamepad1.left_trigger > 0.1) {
+                leftslide.setPower(-1);
+            }
+            if (gamepad1.right_bumper) {
+                rightslide.setPower(1);
+            }
+            else if (gamepad1.right_trigger > 0.1) {
+                rightslide.setPower(-1);
+            }
+        // INTAKE & OUTTAKE
+            if (gamepad2.dpad_up) {
+                leftIntake.setPower(1);
+                rightIntake.setPower(1);
+            }
+            else if (gamepad2.dpad_down) {
+                leftIntake.setPower(-1);
+                rightIntake.setPower(-1);
+            }
+            else {
+                leftIntake.setPower(0);
+                rightIntake.setPower(0);
+            }
 
+            if (gamepad2.left_trigger > 0.1) {
+                leftBumper.setPosition(0);
+            }
+            else {
+                leftBumper.setPosition(1);
+            }
+            if (gamepad2.right_trigger > 0.1) {
+                rightBumper.setPosition(1);
+            }
+            else {
+                rightBumper.setPosition(0);
+            }
         // ARM & WRIST
-            if (gamepad2.dpad_up)
+           /* if (gamepad2.dpad_up)
             {
                 motorArm.setPower(1);
             } else if (gamepad2.dpad_down) {
                 motorArm.setPower(-1);
             }
             else motorArm.setPower(0);  // Arm remains in its static position.
-
+*/
+            /*
             double wristUpPos = 1.0;
             double wristDownPos = 0.02;
             if (gamepad2.y && wristCurrentPos <= wristUpPos)
@@ -107,13 +158,20 @@ public class StraferTeleOp extends LinearOpMode {
                 gripper.setPosition(0.0);
             }
             else gripper.setPosition(1.0);
-
+*/
             // plane
             if (runtime.seconds()>=90 && gamepad2.b)
             {
                 plane.setPosition(1.0);
             }
             else plane.setPosition(0.0);
+
+            if (gamepad2.a) {
+                Dumper.setPosition(1);
+            }
+            else {
+                Dumper.setPosition(0);
+            }
 
 
 
@@ -147,7 +205,11 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("Position", motorBackRight.getCurrentPosition());
             telemetry.addData("Direction", motorBackRight.getDirection());
             telemetry.addData("Power", motorBackRight.getPower());
+            // Sliders left and right are separated
+            telemetry.addLine("--------------Slider--------------");
+            telemetry.addLine("===> Left");
             // Arm, Wrist, and Gripper
+            /*
             telemetry.addLine("--------------Arm--------------");
             telemetry.addData("Busy=", motorArm.isBusy());
             telemetry.addData("Position", motorArm.getCurrentPosition());
@@ -159,6 +221,7 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("▶ PortNum", motorArm.getPortNumber() + "\n");
             telemetry.addData("▶ Device Name", motorArm.getDeviceName() + "\n");
             telemetry.addData("Is at ZeroPowerBehavior", motorArm.getZeroPowerBehavior());
+
             // Please note, Servos cannot use DCMotor/DCMotorSimple commands!
             // See Servo.java for list of Servo commands for telemetry
             telemetry.addLine("--------------Wrist--------------");
@@ -174,6 +237,7 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("▶ PortNum", gripper.getPortNumber() + "\n");
             telemetry.addData("▶ Device Name", gripper.getDeviceName() + "\n");
             telemetry.update();
+            */
         }
     }
 }
