@@ -18,8 +18,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 @Autonomous(name="Auto_BlueBackstage", group="Blue Auto")
 public class Auto_BlueBackstage extends LinearOpMode{
     // variable declaration & setup
-    DcMotor frontleft, frontright, backleft, backright, arm;
-    Servo wrist, gripper;
+    DcMotor frontleft, frontright, backleft, backright;
+    //Servo wrist, gripper;
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -59,15 +59,15 @@ public class Auto_BlueBackstage extends LinearOpMode{
         frontright = hardwareMap.dcMotor.get("rf");
         backleft = hardwareMap.dcMotor.get("lb");
         backright = hardwareMap.dcMotor.get("rb");
-        arm = hardwareMap.dcMotor.get("arm");
+        //arm = hardwareMap.dcMotor.get("arm");
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        gripper = hardwareMap.servo.get("gripper");
+        //gripper = hardwareMap.servo.get("gripper");
 
-        wrist = hardwareMap.servo.get("wrist");
+        //wrist = hardwareMap.servo.get("wrist");
 
-        closeGripper();
+        //closeGripper();
 
         // wait for Start to be pressed
         waitForStart();
@@ -84,7 +84,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
         forward(32, 1);
 
         // drop off yellow pixel
-        openGripper();
+        //openGripper();
         // strafe right and park
         strafeLeft(20, .5);
 
@@ -97,12 +97,12 @@ public class Auto_BlueBackstage extends LinearOpMode{
 
 
         // drop off yellow pixel
-        wrist.setPosition(0.5);
+        //wrist.setPosition(0.5);
         sleep(150);
-        openGripper();
+        //openGripper();
         sleep(1000);
         back(9, .25);
-        wrist.setPosition(0.02);
+        //wrist.setPosition(0.02);
         sleep(1000);
 
         // strafe right and park
@@ -163,10 +163,10 @@ public class Auto_BlueBackstage extends LinearOpMode{
      @param speed has a range of [-1,1]
      */
     public void arm(double position, double speed){ armRun(position, speed); }
-
+/*
     /**
      * Opens the gripper on the arm of the robot
-     */
+     *
     public void openGripper()
     {
         gripper.setPosition(0.0);
@@ -174,12 +174,12 @@ public class Auto_BlueBackstage extends LinearOpMode{
 
     /**
      * Opens the gripper on the arm of the robot
-     */
+     *
     public void closeGripper()
     {
         gripper.setPosition(1.0);
     }
-
+*/
     /**
      This function's purpose is simply to drive forward or backward.
      To drive backward, simply make the inches input negative.
@@ -213,11 +213,11 @@ public class Auto_BlueBackstage extends LinearOpMode{
      */
     public void armRun(double speed, double position){
         int armMove = (int)(Math.round(position*conversion));
-        arm.setTargetPosition(arm.getCurrentPosition() + armMove);
+        /*arm.setTargetPosition(arm.getCurrentPosition() + armMove);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setPower(speed);
         //
-        arm.setPower(0);
+        arm.setPower(0);*/
     }
 
     /**

@@ -18,8 +18,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 @Autonomous(name="Auto_BlueFront", group="Blue Auto")
 public class Auto_BlueFront extends LinearOpMode{
     // variable declaration & setup
-    DcMotor frontleft, frontright, backleft, backright, arm;
-    Servo wrist, gripper;
+    DcMotor frontleft, frontright, backleft, backright;
+    //Servo wrist, gripper;
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -63,8 +63,8 @@ public class Auto_BlueFront extends LinearOpMode{
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        gripper = hardwareMap.servo.get("gripper");
-        closeGripper();
+        //gripper = hardwareMap.servo.get("gripper");
+        //closeGripper();
 
         // wait for Start to be pressed
         waitForStart();
@@ -128,11 +128,11 @@ public class Auto_BlueFront extends LinearOpMode{
      @param speed has a range of [0,1]
      */
     public void strafeRight(double inches, double speed){ strafeToPosition(inches, speed); }
-
+/*
     // At some point we can add a function for the arm. - Zach Johnson
     /**
      * Opens the gripper on the arm of the robot
-     */
+     *
     public void openGripper()
     {
         gripper.setPosition(0.0);
@@ -140,12 +140,12 @@ public class Auto_BlueFront extends LinearOpMode{
 
     /**
      * Opens the gripper on the arm of the robot
-     */
+     *
     public void closeGripper()
     {
         gripper.setPosition(1.0);
     }
-
+*/
     /**
      This function's purpose is simply to drive forward or backward.
      To drive backward, simply make the inches input negative.
