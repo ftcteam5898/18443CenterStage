@@ -34,6 +34,8 @@ public class StraferTeleOp extends LinearOpMode {
         //DcMotor motorArm = hardwareMap.dcMotor.get("arm");
         DcMotor leftslide = hardwareMap.dcMotor.get("lslide");
         DcMotor rightslide = hardwareMap.dcMotor.get("rslide");
+        rightslide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftslide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         DcMotor leftIntake = hardwareMap.dcMotor.get("lintake");
         DcMotor rightIntake = hardwareMap.dcMotor.get("rintake");
