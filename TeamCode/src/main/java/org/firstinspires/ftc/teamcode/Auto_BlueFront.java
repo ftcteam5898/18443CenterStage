@@ -20,6 +20,8 @@ public class Auto_BlueFront extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright;
     //Servo wrist, gripper;
+    Servo leftBumper = hardwareMap.servo.get("lbumper");
+    Servo rightBumper = hardwareMap.servo.get("rbumper");
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -65,6 +67,9 @@ public class Auto_BlueFront extends LinearOpMode{
 
         //gripper = hardwareMap.servo.get("gripper");
         //closeGripper();
+
+        leftBumper.setPosition(0);
+        rightBumper.setPosition(1);
 
         // wait for Start to be pressed
         waitForStart();
