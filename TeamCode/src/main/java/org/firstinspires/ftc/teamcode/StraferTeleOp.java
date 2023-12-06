@@ -171,10 +171,10 @@ public class StraferTeleOp extends LinearOpMode {
             else plane.setPosition(0.0);
 
             if (gamepad2.a) {
-                Dumper.setPosition(1);
+                Dumper.setPosition(0);
             }
             else {
-                Dumper.setPosition(0);
+                Dumper.setPosition(1);
             }
 
 
