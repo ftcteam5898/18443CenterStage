@@ -20,8 +20,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright;
     //Servo wrist, gripper;
-    Servo leftBumper = hardwareMap.servo.get("lbumper");
-    Servo rightBumper = hardwareMap.servo.get("rbumper");
+    Servo leftBumper, rightBumper;
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -66,6 +65,8 @@ public class Auto_BlueBackstage extends LinearOpMode{
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //gripper = hardwareMap.servo.get("gripper");
+        leftBumper = hardwareMap.servo.get("lbumper");
+        rightBumper = hardwareMap.servo.get("rbumper");
 
         //wrist = hardwareMap.servo.get("wrist");
 

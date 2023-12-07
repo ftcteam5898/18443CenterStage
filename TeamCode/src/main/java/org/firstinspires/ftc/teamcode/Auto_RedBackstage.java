@@ -19,9 +19,9 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 public class Auto_RedBackstage extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright;
-    //Servo wrist, gripper;
-    Servo leftBumper = hardwareMap.servo.get("lbumper");
-    Servo rightBumper = hardwareMap.servo.get("rbumper");
+
+    Servo leftBumper;
+    Servo rightBumper;
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -61,6 +61,8 @@ public class Auto_RedBackstage extends LinearOpMode{
         frontright = hardwareMap.dcMotor.get("rf");
         backleft = hardwareMap.dcMotor.get("lb");
         backright = hardwareMap.dcMotor.get("rb");
+        rightBumper = hardwareMap.servo.get("rbumper");
+        leftBumper = hardwareMap.servo.get("lbumper");
         //arm = hardwareMap.dcMotor.get("arm");
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);

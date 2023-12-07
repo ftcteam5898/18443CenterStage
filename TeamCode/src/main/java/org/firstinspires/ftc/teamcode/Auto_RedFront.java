@@ -20,8 +20,7 @@ public class Auto_RedFront extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright;
     //Servo wrist, gripper;
-    Servo leftBumper = hardwareMap.servo.get("lbumper");
-    Servo rightBumper = hardwareMap.servo.get("rbumper");
+    Servo leftBumper, rightBumper;
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -64,6 +63,9 @@ public class Auto_RedFront extends LinearOpMode{
         //arm = hardwareMap.dcMotor.get("arm");
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        leftBumper = hardwareMap.servo.get("lbumper");
+        rightBumper = hardwareMap.servo.get("rbumper");
 
         //gripper = hardwareMap.servo.get("gripper");
         //closeGripper();
