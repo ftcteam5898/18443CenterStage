@@ -85,7 +85,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
         back(8, 0.5);
 
 
-        // turn right and travel to the board
+        // turn left and travel to the board
         turnLeft(90, 0.5);
         forward(32, 1);
 
@@ -93,27 +93,10 @@ public class Auto_BlueBackstage extends LinearOpMode{
         //openGripper();
         // strafe right and park
         strafeLeft(20, .5);
-
         sleep(150);
-
-        // turn right and travel to the board
-        turnLeft(85, 0.25);
-        sleep(150);
-        forward(30, 1);
-
-
-        // drop off yellow pixel
-        //wrist.setPosition(0.5);
-        sleep(150);
-        //openGripper();
-        sleep(1000);
-        back(9, .25);
-        //wrist.setPosition(0.02);
-        sleep(1000);
-
-        // strafe right and park
-        strafeRight(30, .5);
         forward(12, 1);
+
+
     }
 
 
