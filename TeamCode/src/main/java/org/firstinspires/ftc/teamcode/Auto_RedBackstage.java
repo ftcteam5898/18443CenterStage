@@ -18,10 +18,12 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 @Autonomous(name="Auto_RedBackstage", group="Red Auto", preselectTeleOp="Strafer Tele Op")
 public class Auto_RedBackstage extends LinearOpMode{
     // variable declaration & setup
-    DcMotor frontleft, frontright, backleft, backright;
+    DcMotor frontleft, frontright, backleft, backright, leftSlide;
 
     Servo leftBumper;
     Servo rightBumper;
+    Servo wrist;
+    Servo claw;
 
     // Set up webcam, processor, & vision portal
     //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -61,16 +63,24 @@ public class Auto_RedBackstage extends LinearOpMode{
         frontright = hardwareMap.dcMotor.get("rf");
         backleft = hardwareMap.dcMotor.get("lb");
         backright = hardwareMap.dcMotor.get("rb");
+
+        leftSlide = hardwareMap.dcMotor.get("lslide");
+        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         rightBumper = hardwareMap.servo.get("rbumper");
         leftBumper = hardwareMap.servo.get("lbumper");
-        //arm = hardwareMap.dcMotor.get("arm");
+        wrist = hardwareMap.servo.get("wrist");
+        claw = hardwareMap.servo.get("claw");
+
+
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //gripper = hardwareMap.servo.get("gripper");
-        //closeGripper();
-        leftBumper.setPosition(0);
+
+
+        leftBumper.setPosition(0.1);
         rightBumper.setPosition(1);
+        closeClaw();
 
         // wait for Start to be pressed
         waitForStart();
@@ -81,16 +91,18 @@ public class Auto_RedBackstage extends LinearOpMode{
         forward(28, 1);
         back(8, 0.5);
 
-        // turn right and travel to the board
-        turnRight(90, 0.5);
-        forward(32, 1);
+        // turn left and back up to the board
+        turnLeft(85, 0.5);
+        back(32, 1);
 
         // drop off yellow pixel
-        //openGripper();
+        extendSlide(2);
+        dumpPixel();
+        closeSlide(2);
 
         // strafe right and park
-        strafeRight(20, .5);
-        forward(12, 1);
+        strafeLeft(26, .5);
+        back(12, 1);
     }
 
 
@@ -141,23 +153,60 @@ public class Auto_RedBackstage extends LinearOpMode{
      */
     public void strafeRight(double inches, double speed){ strafeToPosition(inches, speed); }
 
-  /*
+
     /**
      * Opens the gripper on the arm of the robot
-
-    public void openGripper()
+    */
+    public void openClaw()
     {
-        gripper.setPosition(0.0);
+        claw.setPosition(0.5);
     }
 
     /**
      * Opens the gripper on the arm of the robot
      *
-    public void closeGripper()
+     */
+    public void closeClaw()
     {
-        gripper.setPosition(1.0);
+        claw.setPosition(0);
     }
-*/
+
+    /**
+     * Releases the yellow pixel onto the backdrop
+     *
+     */
+    public void dumpPixel()
+    {
+        wrist.setPosition(1);
+        sleep(100);
+        openClaw();
+        sleep(100);
+        closeClaw();
+        sleep(100);
+        wrist.setPosition(.5);
+        sleep(100);
+    }
+
+    /**
+     * Extends the claw slide
+     * @param time number of seconds that slide should extend
+     */
+    public void extendSlide(int time)
+    {
+        leftSlide.setPower(-.5);
+        sleep(time * 1000);
+    }
+
+    /**
+     * Closes the claw slide
+     * @param time number of seconds that slide should extend
+     */
+    public void closeSlide(int time)
+    {
+        leftSlide.setPower(.5);
+        sleep(time * 1000);
+    }
+
     /**
     This function's purpose is simply to drive forward or backward.
     To drive backward, simply make the inches input negative.
