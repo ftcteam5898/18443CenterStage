@@ -31,7 +31,7 @@ public class StraferTeleOp extends LinearOpMode {
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("lb");
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("rf");
         DcMotor motorBackRight = hardwareMap.dcMotor.get("rb");
-        //DcMotor motorArm = hardwareMap.dcMotor.get("arm");
+
         DcMotor leftslide = hardwareMap.dcMotor.get("lslide");
         DcMotor rightslide = hardwareMap.dcMotor.get("rslide");
         rightslide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -41,13 +41,11 @@ public class StraferTeleOp extends LinearOpMode {
         DcMotor rightIntake = hardwareMap.dcMotor.get("rintake");
 
         //Declare servos
-
-        //Servo plane = hardwareMap.servo.get("plane");
         Servo leftBumper = hardwareMap.servo.get("lbumper");
         Servo rightBumper = hardwareMap.servo.get("rbumper");
         Servo wrist = hardwareMap.servo.get("wrist");
         Servo claw = hardwareMap.servo.get("claw");
-
+        //Servo plane = hardwareMap.servo.get("plane");
 
 
         // Reverse one side of the motors
@@ -59,13 +57,16 @@ public class StraferTeleOp extends LinearOpMode {
         telemetry.addLine("Robot Internal Visualizer (RIV) -- Version 2.1.0\n\n");
         telemetry.addData("Robot Status", "◌ Initialized");
         telemetry.update();
+
         waitForStart();
         runtime.reset();
+
+        //Set starting positions of wrist & claw
         wrist.setPosition(0.5);
         claw.setPosition(0.5);
+
         if (isStopRequested()) return;
         while (opModeIsActive()) {
-
 
 
             double y = -gamepad1.left_stick_y; // Remember, this is reversed!
@@ -85,7 +86,9 @@ public class StraferTeleOp extends LinearOpMode {
             motorBackLeft.setPower(backLeftPower);
             motorFrontRight.setPower(frontRightPower);
             motorBackRight.setPower(backRightPower);
-        // SLIDERS
+
+        // SLIDES
+            // Left Slide
             if (gamepad1.left_bumper) {
                 leftslide.setPower(-.5);
             }
@@ -100,6 +103,7 @@ public class StraferTeleOp extends LinearOpMode {
                 leftslide.setPower(0);
             }
 
+            // Right Slide
             if (gamepad1.right_bumper) {
                 rightslide.setPower(.5);
             }
@@ -109,9 +113,9 @@ public class StraferTeleOp extends LinearOpMode {
             else if (gamepad1.right_trigger > 0.1) {
                 rightslide.setPower(-.5);
             }
-
             else
                 rightslide.setPower(0);
+
         // INTAKE & OUTTAKE
             if (gamepad2.dpad_up) {
                 leftIntake.setPower(1);
@@ -152,10 +156,6 @@ public class StraferTeleOp extends LinearOpMode {
             else if (gamepad2.a) {
                 wrist.setPosition(.5);
             }
-
-
-
-
 
 
             // NOTE: This will help with our next robot. Visual information is very useful!
