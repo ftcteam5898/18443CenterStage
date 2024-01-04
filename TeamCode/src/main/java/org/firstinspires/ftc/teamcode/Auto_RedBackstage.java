@@ -15,7 +15,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
-@Autonomous(name="Auto_RedBackstage", group="Red Auto")
+@Autonomous(name="Auto_RedBackstage", group="Red Auto", preselectTeleOp="Strafer Tele Op")
 public class Auto_RedBackstage extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright;

@@ -15,7 +15,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
-@Autonomous(name="Auto_RedFront", group="Red Auto")
+@Autonomous(name="Auto_RedFront", group="Red Auto", preselectTeleOp="Strafer Tele Op")
 public class Auto_RedFront extends LinearOpMode{
     // variable declaration & setup
     DcMotor frontleft, frontright, backleft, backright;
