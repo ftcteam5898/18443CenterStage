@@ -47,7 +47,7 @@ public class StraferTeleOp extends LinearOpMode {
         Servo rightBumper = hardwareMap.servo.get("rbumper");
         Servo wrist = hardwareMap.servo.get("wrist");
         Servo claw = hardwareMap.servo.get("claw");
-        
+
 
 
         // Reverse one side of the motors
