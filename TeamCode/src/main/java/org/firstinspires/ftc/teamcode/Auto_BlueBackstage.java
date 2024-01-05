@@ -101,7 +101,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
         closeSlide(2);
 
         // strafe right and park
-        strafeRight(26, .5);
+        strafeRight(30, .5);
         back(12, 1);
     }
 
@@ -178,7 +178,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
     public void dumpPixel()
     {
         wrist.setPosition(1);
-        sleep(100);
+        sleep(200);
         openClaw();
         sleep(100);
         closeClaw();
