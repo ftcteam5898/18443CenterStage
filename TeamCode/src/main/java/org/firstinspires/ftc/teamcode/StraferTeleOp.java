@@ -87,41 +87,23 @@ public class StraferTeleOp extends LinearOpMode {
             motorFrontRight.setPower(frontRightPower);
             motorBackRight.setPower(backRightPower);
 
-        // SLIDES
-            // Left Slide
             if (gamepad1.left_bumper) {
-                leftslide.setPower(-.5);
+                leftBumper.setPosition(0);
             }
-            else if ((gamepad1.b || gamepad1.circle) && gamepad1.left_trigger > 0.1) {
-                leftslide.setPower(1);
+            else {
+                leftBumper.setPosition(1);
             }
-            else if (gamepad1.left_trigger > 0.1) {
-                leftslide.setPower(.5);
-            }
-
-            else if (!gamepad1.left_bumper && gamepad1.left_trigger<=0.1) {
-                leftslide.setPower(0);
-            }
-
-            // Right Slide
             if (gamepad1.right_bumper) {
-                rightslide.setPower(.5);
+                rightBumper.setPosition(1);
             }
-            else if ((gamepad1.b || gamepad1.circle) && gamepad1.right_trigger > 0.1) {
-                rightslide.setPower(-1);
+            else {
+                rightBumper.setPosition(0);
             }
-            else if (gamepad1.right_trigger > 0.1) {
-                rightslide.setPower(-.5);
-            }
-            else
-                rightslide.setPower(0);
-
-        // INTAKE & OUTTAKE
-            if (gamepad2.dpad_up) {
+            if (gamepad1.dpad_up) {
                 leftIntake.setPower(1);
                 rightIntake.setPower(1);
             }
-            else if (gamepad2.dpad_down) {
+            else if (gamepad1.dpad_down) {
                 leftIntake.setPower(-1);
                 rightIntake.setPower(-1);
             }
@@ -130,31 +112,44 @@ public class StraferTeleOp extends LinearOpMode {
                 rightIntake.setPower(0);
             }
 
-            if (gamepad2.left_trigger > 0.1) {
-                leftBumper.setPosition(0);
+
+            // Driver 2
+
+            if (gamepad2.right_bumper) {
+                rightslide.setPower(.5);
+            }
+            else if (gamepad2.right_trigger > 0.1) {
+                rightslide.setPower(-.5);
+            }
+            else
+                rightslide.setPower(0);
+
+            if (gamepad2.dpad_up) {
+                rightslide.setPower(1);
+                leftslide.setPower(-1);
+            }
+            else if (gamepad2.dpad_down) {
+                rightslide.setPower(-1);
+                leftslide.setPower(1);
             }
             else {
-                leftBumper.setPosition(1);
-            }
-            if (gamepad2.right_trigger > 0.1) {
-                rightBumper.setPosition(1);
-            }
-            else {
-                rightBumper.setPosition(0);
+                rightslide.setPower(0);
+                leftslide.setPower(0);
             }
 
             if (gamepad2.x) {
-                claw.setPosition(0);
+                claw.setPosition(.5); //open
+
             }
             else if (gamepad2.b) {
-                claw.setPosition(.5);
+                claw.setPosition(0); //close
             }
 
             if (gamepad2.y) {
-                wrist.setPosition(1);
+                wrist.setPosition(.5); // intake
             }
             else if (gamepad2.a) {
-                wrist.setPosition(.5);
+                wrist.setPosition(1); //backboard
             }
 
 
