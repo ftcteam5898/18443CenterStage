@@ -36,6 +36,10 @@ public class StraferTeleOp extends LinearOpMode {
         DcMotor rightslide = hardwareMap.dcMotor.get("rslide");
         rightslide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftslide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightslide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftslide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightslide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftslide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         DcMotor leftIntake = hardwareMap.dcMotor.get("lintake");
         DcMotor rightIntake = hardwareMap.dcMotor.get("rintake");
@@ -68,7 +72,9 @@ public class StraferTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
         while (opModeIsActive()) {
 
+            /////// Driver 1 ////////////
 
+            // Driving controls
             double y = -gamepad1.left_stick_y; // Remember, this is reversed!
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
@@ -87,6 +93,7 @@ public class StraferTeleOp extends LinearOpMode {
             motorFrontRight.setPower(frontRightPower);
             motorBackRight.setPower(backRightPower);
 
+            // Bumpers
             if (gamepad1.left_bumper) {
                 leftBumper.setPosition(0);
             }
@@ -99,6 +106,8 @@ public class StraferTeleOp extends LinearOpMode {
             else {
                 rightBumper.setPosition(0);
             }
+
+            // Intake
             if (gamepad1.dpad_up) {
                 leftIntake.setPower(1);
                 rightIntake.setPower(1);
@@ -113,12 +122,14 @@ public class StraferTeleOp extends LinearOpMode {
             }
 
 
-            // Driver 2
+            ///////// Driver 2 //////////////
+            int rightSlidePos = rightslide.getCurrentPosition();
+            int leftSlidePos = leftslide.getCurrentPosition();
 
             if (gamepad2.right_bumper) {
                 rightslide.setPower(.5);
             }
-            else if (gamepad2.right_trigger > 0.1) {
+            else if (gamepad2.right_trigger > 0.1 && rightSlidePos >= 100) {
                 rightslide.setPower(-.5);
             }
             else
@@ -128,7 +139,7 @@ public class StraferTeleOp extends LinearOpMode {
                 rightslide.setPower(1);
                 leftslide.setPower(-1);
             }
-            else if (gamepad2.dpad_down) {
+            else if (gamepad2.dpad_down && rightSlidePos >= 100) {
                 rightslide.setPower(-1);
                 leftslide.setPower(1);
             }
@@ -186,6 +197,9 @@ public class StraferTeleOp extends LinearOpMode {
             // Sliders left and right are separated
             telemetry.addLine("--------------Slider--------------");
             telemetry.addLine("===> Left");
+            telemetry.addData("R Slide Pos: ", rightSlidePos);
+            telemetry.addData("L Slide Pos: ", leftSlidePos);
+            telemetry.update();
             // Arm, Wrist, and Gripper
             /*
             telemetry.addLine("--------------Arm--------------");
@@ -214,7 +228,7 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("▶ Controller", gripper.getController() + "\n");
             telemetry.addData("▶ PortNum", gripper.getPortNumber() + "\n");
             telemetry.addData("▶ Device Name", gripper.getDeviceName() + "\n");
-            telemetry.update();
+
             */
         }
     }
