@@ -140,8 +140,8 @@ public class StraferTeleOp extends LinearOpMode {
                 leftslide.setPower(-1);
             }
             else if (gamepad2.dpad_down && rightSlidePos >= 100) {
-                rightslide.setPower(-1);
-                leftslide.setPower(1);
+                rightslide.setPower(-.75);
+                leftslide.setPower(.75);
             }
             else {
                 rightslide.setPower(0);
@@ -150,7 +150,6 @@ public class StraferTeleOp extends LinearOpMode {
 
             if (gamepad2.x) {
                 claw.setPosition(.5); //open
-
             }
             else if (gamepad2.b) {
                 claw.setPosition(0); //close
