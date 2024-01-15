@@ -95,6 +95,10 @@ public class Auto_RedBackstage extends LinearOpMode{
         leftBumper.setPosition(0.1);
         rightBumper.setPosition(1);
         closeClaw();
+        while(tfod.getRecognitions().size() == 0)
+        {
+            tfod.getRecognitions();
+        }
         telemetryTfod();
 
 
@@ -107,11 +111,47 @@ public class Auto_RedBackstage extends LinearOpMode{
         {
             telemetry.addLine("Object location: Left");
             telemetry.update();
+
+            // go forward, rotate, and back up to drop off the purple pixel on the tape line
+            forward(22, 1);
+            turnLeft(90, .25);
+            forward(8, .5);
+            back(2, 0.5);
+
+            // back up to the board
+            back(34, 1);
+
+            // drop off yellow pixel
+            extendSlide(2);
+            dumpPixel();
+            closeSlide(2);
+
+            // strafe right and park
+            strafeLeft(30, .5);
+            back(12, 1);
         }
         else if (pos == 3)
         {
             telemetry.addLine("Object location: Right");
             telemetry.update();
+
+            // strafe right, go forward,  and back up to drop off the purple pixel on the tape line
+            strafeRight(8, .5);
+            forward(22, 1);
+            back(2, 0.5);
+
+            // turn left and back up to the board
+            turnLeft(85, 0.5);
+            back(24, 1);
+
+            // drop off yellow pixel
+            extendSlide(2);
+            dumpPixel();
+            closeSlide(2);
+
+            // strafe right and park
+            strafeLeft(30, .5);
+            back(12, 1);
         }
         else
         {
@@ -529,7 +569,7 @@ public class Auto_RedBackstage extends LinearOpMode{
      */
     private void telemetryTfod() {
 
-        List<Recognition> currentRecognitions = currentRecognitions = tfod.getRecognitions();;
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
         for(int i = 0; i < 50; i++)
             currentRecognitions = tfod.getRecognitions();
         telemetry.addData("# Objects Detected", currentRecognitions.size());
@@ -559,7 +599,10 @@ public class Auto_RedBackstage extends LinearOpMode{
      *
      */
     private int objRecog() {
-        sleep(500);
+        while(tfod.getRecognitions().size() == 0 || tfod.getRecognitions().get(0).getConfidence()<80)
+        {
+            tfod.getRecognitions();
+        }
         List<Recognition> currentRecognitions = tfod.getRecognitions();
 
         // Step through the list of recognitions and display info for each one.
