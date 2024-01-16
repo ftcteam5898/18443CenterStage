@@ -95,6 +95,9 @@ public class Auto_RedBackstage extends LinearOpMode{
         leftBumper.setPosition(0.1);
         rightBumper.setPosition(1);
         closeClaw();
+        sleep(1000);
+        wrist.setPosition(.4); // lift a little off the ground
+
         while(tfod.getRecognitions().size() == 0)
         {
             tfod.getRecognitions();
@@ -107,18 +110,23 @@ public class Auto_RedBackstage extends LinearOpMode{
 
         // Call functions here
         int pos = objRecog();
+
+        sleep(500);
         if (pos == 1)
         {
             telemetry.addLine("Object location: Left");
             telemetry.update();
 
             // go forward, rotate, and back up to drop off the purple pixel on the tape line
-            forward(22, 1);
+            forward(22, .5);
+            sleep(1000);
             turnLeft(90, .25);
+            sleep(1000);
             forward(8, .5);
+            sleep(1000);
             back(2, 0.5);
 
-            // back up to the board
+            /*// back up to the board
             back(34, 1);
 
             // drop off yellow pixel
@@ -128,7 +136,7 @@ public class Auto_RedBackstage extends LinearOpMode{
 
             // strafe right and park
             strafeLeft(30, .5);
-            back(12, 1);
+            back(12, 1);*/
         }
         else if (pos == 3)
         {
@@ -252,13 +260,13 @@ public class Auto_RedBackstage extends LinearOpMode{
     public void dumpPixel()
     {
         wrist.setPosition(1);
-        sleep(200);
+        sleep(500);
         openClaw();
-        sleep(100);
+        sleep(500);
         closeClaw();
-        sleep(100);
+        sleep(500);
         wrist.setPosition(.5);
-        sleep(100);
+        sleep(500);
     }
 
     /**
@@ -599,9 +607,11 @@ public class Auto_RedBackstage extends LinearOpMode{
      *
      */
     private int objRecog() {
-        while(tfod.getRecognitions().size() == 0 || tfod.getRecognitions().get(0).getConfidence()<80)
+        while(tfod.getRecognitions().size() == 0)
         {
             tfod.getRecognitions();
+            telemetry.addLine("Getting recognitions");
+            telemetry.update();
         }
         List<Recognition> currentRecognitions = tfod.getRecognitions();
 
@@ -610,7 +620,7 @@ public class Auto_RedBackstage extends LinearOpMode{
             double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
             double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
 
-            if (recognition.getConfidence()*100 > 80)
+            if (recognition.getConfidence()*100 > 65)
             {
                 if (x < 200) return 1;
                 else if (x > 1000) return 3;
