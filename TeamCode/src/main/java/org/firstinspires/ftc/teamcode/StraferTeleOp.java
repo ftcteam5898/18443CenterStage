@@ -143,6 +143,11 @@ public class StraferTeleOp extends LinearOpMode {
                 rightslide.setPower(-.75);
                 leftslide.setPower(.75);
             }
+            else if(gamepad2.dpad_down && rightSlidePos >= 100 && gamepad2.right_trigger > 0.1)
+            {
+                rightslide.setPower(-.75);
+                leftslide.setPower(.75);
+            }
             else {
                 rightslide.setPower(0);
                 leftslide.setPower(0);
