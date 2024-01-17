@@ -88,7 +88,7 @@ public class Auto_RedBackstage extends LinearOpMode{
         // Call functions here
 
         // go forward and back up to drop off the purple pixel on the tape line
-        forward(28, 1);
+        forward(28, .7);
         back(8, 0.5);
 
         // turn left and back up to the board
@@ -180,9 +180,9 @@ public class Auto_RedBackstage extends LinearOpMode{
         wrist.setPosition(1);
         sleep(200);
         openClaw();
-        sleep(100);
+        sleep(500);
         closeClaw();
-        sleep(100);
+        sleep(500);
         wrist.setPosition(.5);
         sleep(100);
     }
