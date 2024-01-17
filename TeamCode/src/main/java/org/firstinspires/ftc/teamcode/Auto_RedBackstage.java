@@ -145,12 +145,12 @@ public class Auto_RedBackstage extends LinearOpMode{
 
             // strafe right, go forward,  and back up to drop off the purple pixel on the tape line
             strafeRight(8, .5);
-            forward(22, 1);
+            forward(22, .5);
             back(2, 0.5);
 
             // turn left and back up to the board
             turnLeft(85, 0.5);
-            back(24, 1);
+            back(24, .5);
 
             // drop off yellow pixel
             extendSlide(2);
@@ -159,7 +159,7 @@ public class Auto_RedBackstage extends LinearOpMode{
 
             // strafe right and park
             strafeLeft(30, .5);
-            back(12, 1);
+            back(12, .5);
         }
         else
         {
@@ -167,12 +167,12 @@ public class Auto_RedBackstage extends LinearOpMode{
             telemetry.update();
 
             // go forward and back up to drop off the purple pixel on the tape line
-            forward(28, 1);
+            forward(28, .5);
             back(8, 0.5);
 
             // turn left and back up to the board
-            turnLeft(85, 0.5);
-            back(32, 1);
+            turnLeft(85, 0.25);
+            back(32, .5);
 
             // drop off yellow pixel
             extendSlide(2);
@@ -181,7 +181,7 @@ public class Auto_RedBackstage extends LinearOpMode{
 
             // strafe right and park
             strafeLeft(30, .5);
-            back(12, 1);
+            back(12, .5);
         }
 
 
