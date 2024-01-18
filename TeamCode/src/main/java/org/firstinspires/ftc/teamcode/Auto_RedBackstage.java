@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Size;
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,12 +10,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+
+import java.util.List;
 
 @Autonomous(name="Auto_RedBackstage", group="Red Auto", preselectTeleOp="Strafer Tele Op")
 public class Auto_RedBackstage extends LinearOpMode{
@@ -26,9 +32,15 @@ public class Auto_RedBackstage extends LinearOpMode{
     Servo claw;
 
     // Set up webcam, processor, & vision portal
-    //AprilTagProcessor myAprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
-    //TfodProcessor myTfodProcessor = TfodProcessor.easyCreateWithDefaults();
-    //VisionPortal myVisionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), myAprilTagProcessor, myTfodProcessor);
+    private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
+
+    // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
+    // this is only used for Android Studio when using models in Assets.
+    private static final String TFOD_MODEL_ASSET = "18443_red_centerstage.tflite";
+    // Define the labels recognized in the model for TFOD (must be in training order!)
+    private static final String[] LABELS = {"redCastle"};
+    private TfodProcessor tfod;
+    private VisionPortal visionPortal;
 
     // motor counts per rotation (ticks/pulses per rotation)
     // check motor specs from manufacturer
@@ -58,6 +70,8 @@ public class Auto_RedBackstage extends LinearOpMode{
     public void runOpMode(){
 
         initGyro();
+        initTfod();
+
         // setup motors
         frontleft = hardwareMap.dcMotor.get("lf");
         frontright = hardwareMap.dcMotor.get("rf");
@@ -81,28 +95,102 @@ public class Auto_RedBackstage extends LinearOpMode{
         leftBumper.setPosition(0.1);
         rightBumper.setPosition(1);
         closeClaw();
+        sleep(1000);
+        wrist.setPosition(.4); // lift a little off the ground
+
+        while(tfod.getRecognitions().size() == 0)
+        {
+            tfod.getRecognitions();
+        }
+        telemetryTfod();
+
 
         // wait for Start to be pressed
         waitForStart();
 
         // Call functions here
+        int pos = objRecog();
 
-        // go forward and back up to drop off the purple pixel on the tape line
-        forward(26, .7);
-        back(8, 0.5);
+        sleep(500);
+        if (pos == 1)
+        {
+            telemetry.addLine("Object location: Left");
+            telemetry.update();
 
-        // turn left and back up to the board
-        turnLeft(85, 0.5);
-        back(32, 1);
+            // go forward, rotate, and back up to drop off the purple pixel on the tape line
+            forward(22, .5);
+            sleep(1000);
+            turnLeft(90, .25);
+            sleep(1000);
+            forward(8, .5);
+            sleep(1000);
+            back(2, 0.5);
 
-        // drop off yellow pixel
-        extendSlide(2.75);
-        dumpPixel();
-        closeSlide(2.75);
+            /*// back up to the board
+            back(34, 1);
 
+            // drop off yellow pixel
+            extendSlide(2);
+            dumpPixel();
+            closeSlide(2);
+
+            // strafe right and park
+            strafeLeft(30, .5);
+            back(12, 1);*/
+        }
+        else if (pos == 3)
+        {
+            telemetry.addLine("Object location: Right");
+            telemetry.update();
+
+            // strafe right, go forward,  and back up to drop off the purple pixel on the tape line
+            strafeRight(8, .5);
+            forward(22, .5);
+            back(2, 0.5);
+
+            // turn left and back up to the board
+            turnLeft(85, 0.5);
+            back(24, .5);
+
+            // drop off yellow pixel
+            extendSlide(2);
+            dumpPixel();
+            closeSlide(2);
+
+            // strafe right and park
+            strafeLeft(30, .5);
+            back(12, .5);
+        }
+        else
+        {
+            telemetry.addLine("Object location: Middle");
+            telemetry.update();
+
+            // go forward and back up to drop off the purple pixel on the tape line
+            forward(28, .5);
+            back(8, 0.5);
+
+            // turn left and back up to the board
+            turnLeft(85, 0.25);
+            back(32, .5);
+
+            // drop off yellow pixel
+            extendSlide(2);
+            dumpPixel();
+            closeSlide(2);
+
+            // strafe right and park
+            strafeLeft(30, .5);
+            back(12, .5);
+        }
+
+
+<<<<<<< HEAD
+=======
         // strafe right and park
-        strafeLeft(30, .5);
+        strafeLeft(26, .5);
         back(12, 1);
+>>>>>>> parent of fb23aa4 (auto adjustment)
     }
 
 
@@ -178,35 +266,37 @@ public class Auto_RedBackstage extends LinearOpMode{
     public void dumpPixel()
     {
         wrist.setPosition(1);
-        sleep(200);
+<<<<<<< HEAD
+        sleep(500);
+=======
+        sleep(100);
+>>>>>>> parent of fb23aa4 (auto adjustment)
         openClaw();
         sleep(500);
         closeClaw();
         sleep(500);
         wrist.setPosition(.5);
-        sleep(100);
+        sleep(500);
     }
 
     /**
      * Extends the claw slide
      * @param time number of seconds that slide should extend
      */
-    public void extendSlide(double time)
+    public void extendSlide(int time)
     {
         leftSlide.setPower(-.5);
-        sleep((int)(time * 1000));
-        leftSlide.setPower(0);
+        sleep(time * 1000);
     }
 
     /**
      * Closes the claw slide
      * @param time number of seconds that slide should extend
      */
-    public void closeSlide(double time)
+    public void closeSlide(int time)
     {
         leftSlide.setPower(.5);
-        sleep((int)(time * 1000));
-        leftSlide.setPower(0);
+        sleep(time * 1000);
     }
 
     /**
@@ -427,6 +517,128 @@ public class Auto_RedBackstage extends LinearOpMode{
         frontright.setPower(-input);
         backright.setPower(-input);
     }
+
+    /**
+     * Initialize the TensorFlow Object Detection processor.
+     */
+    private void initTfod() {
+
+        // Create the TensorFlow processor by using a builder.
+        tfod = new TfodProcessor.Builder()
+
+                // With the following lines commented out, the default TfodProcessor Builder
+                // will load the default model for the season. To define a custom model to load,
+                // choose one of the following:
+                //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
+                //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+                .setModelAssetName(TFOD_MODEL_ASSET)
+                //.setModelFileName(TFOD_MODEL_FILE)
+
+                // The following default settings are available to un-comment and edit as needed to
+                // set parameters for custom models.
+                .setModelLabels(LABELS)
+                .setIsModelTensorFlow2(true)
+                .setIsModelQuantized(true)
+                //.setModelInputSize(300)
+                //.setModelAspectRatio(16.0 / 9.0)
+
+                .build();
+
+        // Create the vision portal by using a builder.
+        VisionPortal.Builder builder = new VisionPortal.Builder();
+
+        // Set the camera (webcam vs. built-in RC phone camera).
+        if (USE_WEBCAM) {
+            builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
+        } else {
+            builder.setCamera(BuiltinCameraDirection.BACK);
+        }
+
+        // Choose a camera resolution. Not all cameras support all resolutions.
+        builder.setCameraResolution(new Size(1280, 720));
+
+        // Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
+        //builder.enableLiveView(true);
+
+        // Set the stream format; MJPEG uses less bandwidth than default YUY2.
+        //builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
+
+        // Choose whether or not LiveView stops if no processors are enabled.
+        // If set "true", monitor shows solid orange screen if no processors enabled.
+        // If set "false", monitor shows camera view without annotations.
+        //builder.setAutoStopLiveView(false);
+
+        // Set and enable the processor.
+        builder.addProcessor(tfod);
+
+        // Build the Vision Portal, using the above settings.
+        visionPortal = builder.build();
+
+        // Set confidence threshold for TFOD recognitions, at any time.
+        tfod.setMinResultConfidence(0.75f);
+
+        // Disable or re-enable the TFOD processor at any time.
+        //visionPortal.setProcessorEnabled(tfod, true);
+
+    }   // end method initTfod()
+
+    /**
+     * Add telemetry about TensorFlow Object Detection (TFOD) recognitions.
+     */
+    private void telemetryTfod() {
+
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+        for(int i = 0; i < 50; i++)
+            currentRecognitions = tfod.getRecognitions();
+        telemetry.addData("# Objects Detected", currentRecognitions.size());
+        telemetry.update();
+        // Step through the list of recognitions and display info for each one.
+        for (Recognition recognition : currentRecognitions) {
+            double x = (recognition.getLeft() + recognition.getRight()) / 2;
+            double y = (recognition.getTop() + recognition.getBottom()) / 2;
+
+            telemetry.addData("", " ");
+            telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
+            telemetry.addData("- Position", "%.0f / %.0f", x, y);
+            telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
+            if (x < 200)
+                telemetry.addLine("Left position");
+            else if (x > 1000)
+                telemetry.addLine("Right position");
+            else
+                telemetry.addLine("Middle position");
+            telemetry.update();
+
+        }   // end for() loop
+
+    }   // end method telemetryTfod()
+
+    /**
+     *
+     */
+    private int objRecog() {
+        while(tfod.getRecognitions().size() == 0)
+        {
+            tfod.getRecognitions();
+            telemetry.addLine("Getting recognitions");
+            telemetry.update();
+        }
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+
+        // Step through the list of recognitions and display info for each one.
+        for (Recognition recognition : currentRecognitions) {
+            double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+            double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+
+            if (recognition.getConfidence()*100 > 65)
+            {
+                if (x < 200) return 1;
+                else if (x > 1000) return 3;
+                else return 2;
+            }
+        }   // end for() loop
+        return 2;
+    }   // end method objRecog()
 
     
 }
