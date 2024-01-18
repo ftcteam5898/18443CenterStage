@@ -185,12 +185,7 @@ public class Auto_RedBackstage extends LinearOpMode{
         }
 
 
-<<<<<<< HEAD
-=======
-        // strafe right and park
-        strafeLeft(26, .5);
-        back(12, 1);
->>>>>>> parent of fb23aa4 (auto adjustment)
+
     }
 
 
@@ -266,11 +261,7 @@ public class Auto_RedBackstage extends LinearOpMode{
     public void dumpPixel()
     {
         wrist.setPosition(1);
-<<<<<<< HEAD
         sleep(500);
-=======
-        sleep(100);
->>>>>>> parent of fb23aa4 (auto adjustment)
         openClaw();
         sleep(500);
         closeClaw();
