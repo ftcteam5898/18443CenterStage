@@ -88,7 +88,7 @@ public class Auto_BlueBackstage extends LinearOpMode{
         // Call functions here
 
         // go forward and back up to drop off the purple pixel on the tape line
-        forward(26, .7);
+        forward(28, 1);
         back(8, 0.5);
 
         // turn right and back up to the board
@@ -96,12 +96,12 @@ public class Auto_BlueBackstage extends LinearOpMode{
         back(32, 1);
 
         // drop off yellow pixel
-        extendSlide(2.75);
+        extendSlide(2);
         dumpPixel();
-        closeSlide(2.75);
+        closeSlide(2);
 
         // strafe right and park
-        strafeRight(30, .5);
+        strafeRight(26, .5);
         back(12, 1);
     }
 
@@ -178,11 +178,11 @@ public class Auto_BlueBackstage extends LinearOpMode{
     public void dumpPixel()
     {
         wrist.setPosition(1);
-        sleep(200);
+        sleep(100);
         openClaw();
-        sleep(500);
+        sleep(100);
         closeClaw();
-        sleep(500);
+        sleep(100);
         wrist.setPosition(.5);
         sleep(100);
     }
@@ -191,22 +191,20 @@ public class Auto_BlueBackstage extends LinearOpMode{
      * Extends the claw slide
      * @param time number of seconds that slide should extend
      */
-    public void extendSlide(double time)
+    public void extendSlide(int time)
     {
         leftSlide.setPower(-.5);
-        sleep((int)(time * 1000));
-        leftSlide.setPower(0);
+        sleep(time * 1000);
     }
 
     /**
      * Closes the claw slide
      * @param time number of seconds that slide should extend
      */
-    public void closeSlide(double time)
+    public void closeSlide(int time)
     {
         leftSlide.setPower(.5);
-        sleep((int)(time * 1000));
-        leftSlide.setPower(0);
+        sleep(time * 1000);
     }
 
     /**
