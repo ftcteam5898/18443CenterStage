@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  *
  */
 
-@TeleOp(name="Strafer Tele Op", group="Tele")
+@TeleOp(name="Strafer-new controls", group="Tele")
 public class StraferTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     @Override
