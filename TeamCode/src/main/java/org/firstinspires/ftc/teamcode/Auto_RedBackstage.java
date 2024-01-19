@@ -32,7 +32,7 @@ public class Auto_RedBackstage extends LinearOpMode{
     Servo claw;
 
     // Set up webcam, processor, & vision portal
-    private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
+    /*private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
     // this is only used for Android Studio when using models in Assets.
@@ -40,7 +40,7 @@ public class Auto_RedBackstage extends LinearOpMode{
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {"redCastle"};
     private TfodProcessor tfod;
-    private VisionPortal visionPortal;
+    private VisionPortal visionPortal;*/
 
     // motor counts per rotation (ticks/pulses per rotation)
     // check motor specs from manufacturer
@@ -70,7 +70,7 @@ public class Auto_RedBackstage extends LinearOpMode{
     public void runOpMode(){
 
         initGyro();
-        initTfod();
+        //initTfod();
 
         // setup motors
         frontleft = hardwareMap.dcMotor.get("lf");
@@ -98,18 +98,18 @@ public class Auto_RedBackstage extends LinearOpMode{
         sleep(1000);
         wrist.setPosition(.4); // lift a little off the ground
 
-        while(tfod.getRecognitions().size() == 0)
+        /*while(tfod.getRecognitions().size() == 0)
         {
             tfod.getRecognitions();
         }
-        telemetryTfod();
+        telemetryTfod();*/
 
 
         // wait for Start to be pressed
         waitForStart();
 
         // Call functions here
-        int pos = objRecog();
+        int pos = 2;
 
         sleep(500);
         if (pos == 1)
@@ -512,7 +512,7 @@ public class Auto_RedBackstage extends LinearOpMode{
     /**
      * Initialize the TensorFlow Object Detection processor.
      */
-    private void initTfod() {
+/*    private void initTfod() {
 
         // Create the TensorFlow processor by using a builder.
         tfod = new TfodProcessor.Builder()
@@ -572,11 +572,11 @@ public class Auto_RedBackstage extends LinearOpMode{
         //visionPortal.setProcessorEnabled(tfod, true);
 
     }   // end method initTfod()
-
+*/
     /**
      * Add telemetry about TensorFlow Object Detection (TFOD) recognitions.
      */
-    private void telemetryTfod() {
+/*    private void telemetryTfod() {
 
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         for(int i = 0; i < 50; i++)
@@ -603,11 +603,11 @@ public class Auto_RedBackstage extends LinearOpMode{
         }   // end for() loop
 
     }   // end method telemetryTfod()
-
+*/
     /**
      *
      */
-    private int objRecog() {
+/*    private int objRecog() {
         while(tfod.getRecognitions().size() == 0)
         {
             tfod.getRecognitions();
@@ -631,5 +631,5 @@ public class Auto_RedBackstage extends LinearOpMode{
         return 2;
     }   // end method objRecog()
 
-    
+*/
 }
