@@ -67,7 +67,7 @@ public class StraferTeleOp extends LinearOpMode {
 
         //Set starting positions of wrist & claw
         wrist.setPosition(0.5);
-        claw.setPosition(0.5);
+        claw.setPosition(0);
 
         if (isStopRequested()) return;
         while (opModeIsActive()) {
@@ -127,27 +127,24 @@ public class StraferTeleOp extends LinearOpMode {
             int leftSlidePos = leftslide.getCurrentPosition();
 
             if (gamepad2.right_bumper) {
-                rightslide.setPower(.5);
+                leftslide.setPower(-.5);
             }
-            else if (gamepad2.right_trigger > 0.1 && rightSlidePos >= 100) {
-                rightslide.setPower(-.5);
+            else if (gamepad2.right_trigger > 0.1 && leftSlidePos <= -100) {
+                leftslide.setPower(.5);
             }
-            else
-                rightslide.setPower(0);
-
-            if (gamepad2.dpad_up) {
+            else if (gamepad2.dpad_up) {
                 rightslide.setPower(1);
                 leftslide.setPower(-1);
             }
-            else if (gamepad2.dpad_down && rightSlidePos >= 100) {
-                rightslide.setPower(-.75);
-                leftslide.setPower(.75);
-            }
-            else if(gamepad2.dpad_down && rightSlidePos >= 100 && gamepad2.right_trigger > 0.1)
+            else if(gamepad2.left_bumper && gamepad2.dpad_down)
             {
                 rightslide.setPower(-.75);
+            }
+            else if (!gamepad2.left_bumper && gamepad2.dpad_down && rightSlidePos >= 100) {
+                rightslide.setPower(-.75);
                 leftslide.setPower(.75);
             }
+
             else {
                 rightslide.setPower(0);
                 leftslide.setPower(0);
@@ -169,40 +166,7 @@ public class StraferTeleOp extends LinearOpMode {
 
 
             // NOTE: This will help with our next robot. Visual information is very useful!
-            telemetry.addLine("Robot Internal Visualizer (RIV) -- Version 2.1.0\n\n");
-            telemetry.addData("Robot Status", "✔ Running");
-            telemetry.addData("➤ Active Motor(s)", "lf, lb, rf, rb, arm");
-            telemetry.addData("➤ Active Servo(s)", "wrist, gripper, plane");
-            telemetry.addData("➤ Current Runtime", getRuntime());
-            // Front left and right are separated.
-            telemetry.addLine("--------------Front--------------");
-            telemetry.addLine("===> Left");
-            telemetry.addData("Busy=", motorFrontLeft.isBusy());
-            telemetry.addData("Position", motorFrontLeft.getCurrentPosition());
-            telemetry.addData("Direction", motorFrontLeft.getDirection());
-            telemetry.addData("Power", motorFrontLeft.getPower());
-            telemetry.addLine("===> Right");
-            telemetry.addData("Busy=", motorFrontRight.isBusy());
-            telemetry.addData("Position", motorFrontRight.getCurrentPosition());
-            telemetry.addData("Direction", motorFrontRight.getDirection());
-            telemetry.addData("Power", motorFrontRight.getPower());
-            // Back left and right are separated.
-            telemetry.addLine("--------------Back--------------");
-            telemetry.addLine("===> Left");
-            telemetry.addData("Busy=", motorBackLeft.isBusy());
-            telemetry.addData("Position", motorBackLeft.getCurrentPosition());
-            telemetry.addData("Direction", motorBackLeft.getDirection());
-            telemetry.addData("Power", motorBackLeft.getPower());
-            telemetry.addLine("===> Right");
-            telemetry.addData("Busy=", motorBackRight.isBusy());
-            telemetry.addData("Position", motorBackRight.getCurrentPosition());
-            telemetry.addData("Direction", motorBackRight.getDirection());
-            telemetry.addData("Power", motorBackRight.getPower());
-            // Sliders left and right are separated
-            telemetry.addLine("--------------Slider--------------");
-            telemetry.addLine("===> Left");
-            telemetry.addData("R Slide Pos: ", rightSlidePos);
-            telemetry.addData("L Slide Pos: ", leftSlidePos);
+            telemetry.addData("Gamepad 2 Button pressed: ", gamepad2);
             telemetry.update();
             // Arm, Wrist, and Gripper
             /*
