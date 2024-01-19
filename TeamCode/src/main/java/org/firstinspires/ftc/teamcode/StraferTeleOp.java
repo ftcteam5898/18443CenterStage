@@ -54,12 +54,6 @@ public class StraferTeleOp extends LinearOpMode {
 
         // Reverse one side of the motors
         // If it goes in reverse, reverse the other side.
-        DcMotor armMotor = hardwareMap.dcMotor.get("arm");
-
-        // Reverse the right side motors
-        // Reverse left motors if you are using NeveRests
-       // motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        //motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -240,18 +234,6 @@ public class StraferTeleOp extends LinearOpMode {
             telemetry.addData("▶ Device Name", gripper.getDeviceName() + "\n");
 
             */
-            if (gamepad2.dpad_up) {
-                //armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                armMotor.setPower(0.2);
-                armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                armMotor.setTargetPosition(armMotor.getCurrentPosition() + 100);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            }
-            if (armMotor.getCurrentPosition() <= armMotor.getTargetPosition()) {
-                armMotor.setPower(0.0);
-            }
-
         }
     }
 }
