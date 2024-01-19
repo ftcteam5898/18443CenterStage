@@ -80,7 +80,7 @@ public class Auto_RedFront extends LinearOpMode{
 
         // go forward and back up to drop off the purple pixel on the tape line
         forward(28, 1);
-        back(26, 0.5);
+        back(24, 0.5);
 
         // turn right and travel to the board
         turnRight(85, 0.5);
