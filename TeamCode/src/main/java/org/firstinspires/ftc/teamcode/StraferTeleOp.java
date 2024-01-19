@@ -167,7 +167,7 @@ public class StraferTeleOp extends LinearOpMode {
             {
                 plane.setPosition(0.5);
             }
-            if (gamepad2.guide)
+            if (gamepad2.guide || gamepad2.ps)
             {
                 plane.setPosition(0.5);
             }
@@ -176,37 +176,9 @@ public class StraferTeleOp extends LinearOpMode {
 
             // NOTE: This will help with our next robot. Visual information is very useful!
             telemetry.addData("Gamepad 2 Button pressed: ", gamepad2);
+            telemetry.addData("elapsed time: ", runtime.seconds());
             telemetry.update();
-            // Arm, Wrist, and Gripper
-            /*
-            telemetry.addLine("--------------Arm--------------");
-            telemetry.addData("Busy=", motorArm.isBusy());
-            telemetry.addData("Position", motorArm.getCurrentPosition());
-            telemetry.addData("Direction", motorArm.getDirection());
-            telemetry.addData("Power", motorArm.getPower());
-            telemetry.addData("▶ MotorMode", motorArm.getMode() + "\n");
-            telemetry.addData("▶ MotorType", motorArm.getMotorType() + "\n");
-            telemetry.addData("▶ Controller", motorArm.getController() + "\n");
-            telemetry.addData("▶ PortNum", motorArm.getPortNumber() + "\n");
-            telemetry.addData("▶ Device Name", motorArm.getDeviceName() + "\n");
-            telemetry.addData("Is at ZeroPowerBehavior", motorArm.getZeroPowerBehavior());
 
-            // Please note, Servos cannot use DCMotor/DCMotorSimple commands!
-            // See Servo.java for list of Servo commands for telemetry
-            telemetry.addLine("--------------Wrist--------------");
-            telemetry.addData("Position", wrist.getPosition());
-            telemetry.addData("Direction", wrist.getDirection());
-            telemetry.addData("▶ Controller", wrist.getController() + "\n");
-            telemetry.addData("▶ PortNum", wrist.getPortNumber() + "\n");
-            telemetry.addData("▶ Device Name", wrist.getDeviceName() + "\n");
-            telemetry.addLine("--------------Gripper--------------");
-            telemetry.addData("Position", gripper.getPosition());
-            telemetry.addData("Direction", gripper.getDirection());
-            telemetry.addData("▶ Controller", gripper.getController() + "\n");
-            telemetry.addData("▶ PortNum", gripper.getPortNumber() + "\n");
-            telemetry.addData("▶ Device Name", gripper.getDeviceName() + "\n");
-
-            */
         }
     }
 }
