@@ -49,7 +49,7 @@ public class StraferTeleOp extends LinearOpMode {
         Servo rightBumper = hardwareMap.servo.get("rbumper");
         Servo wrist = hardwareMap.servo.get("wrist");
         Servo claw = hardwareMap.servo.get("claw");
-        //Servo plane = hardwareMap.servo.get("plane");
+        Servo plane = hardwareMap.servo.get("plane");
 
 
         // Reverse one side of the motors
@@ -64,7 +64,7 @@ public class StraferTeleOp extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-
+        plane.setPosition(0);
         //Set starting positions of wrist & claw
         wrist.setPosition(0.5);
         claw.setPosition(0);
@@ -129,7 +129,7 @@ public class StraferTeleOp extends LinearOpMode {
             if (gamepad2.right_bumper) {
                 leftslide.setPower(-.5);
             }
-            else if (gamepad2.right_trigger > 0.1 && leftSlidePos <= -100) {
+            else if (gamepad2.right_trigger > 0.1 && leftSlidePos <= -30) {
                 leftslide.setPower(.5);
             }
             else if (gamepad2.dpad_up) {
@@ -140,7 +140,7 @@ public class StraferTeleOp extends LinearOpMode {
             {
                 rightslide.setPower(-.75);
             }
-            else if (!gamepad2.left_bumper && gamepad2.dpad_down && rightSlidePos >= 100) {
+            else if (!gamepad2.left_bumper && gamepad2.dpad_down && rightSlidePos >= 30) {
                 rightslide.setPower(-.75);
                 leftslide.setPower(.75);
             }
@@ -163,6 +163,15 @@ public class StraferTeleOp extends LinearOpMode {
             else if (gamepad2.a) {
                 wrist.setPosition(1); //backboard
             }
+            if (gamepad2.dpad_left && runtime.seconds()>= 90)
+            {
+                plane.setPosition(0.5);
+            }
+            if (gamepad2.guide)
+            {
+                plane.setPosition(0.5);
+            }
+
 
 
             // NOTE: This will help with our next robot. Visual information is very useful!
